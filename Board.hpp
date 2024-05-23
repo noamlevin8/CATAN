@@ -13,9 +13,9 @@ namespace ariel{
     class Board
     {
         // Fields
-
+        vector<vector<string>> _CatanBoard;
 
         public:
-                
+               Board(); 
     };
 }
