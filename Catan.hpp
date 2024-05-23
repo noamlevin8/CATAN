@@ -16,13 +16,13 @@ namespace ariel {
     {
         // Fields
 
-        Player _p1;
-        Player _p2;
-        Player _p3;
+        Player& _p1;
+        Player& _p2;
+        Player& _p3;
         Board _GameBoard;
 
         public:
-                inline Catan(Player p1, Player p2, Player p3) {this->_p1 = p1; this->_p2 = p2; this->_p3 = p3;}; // Problem
+                inline Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3) {};
                 void ChooseStartingPlayer();
                 Board getBoard();
                 void printWinner();
