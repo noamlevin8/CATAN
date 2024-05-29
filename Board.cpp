@@ -53,4 +53,18 @@ Board::Board()
 
 
     this->_CatanBoard = gameBoard;
+
+    vector<vector<size_t>> placenum(9, vector<size_t>(10, 0));
+    vector<size_t> numbers_left(13, 0);
+
+    numbers_left[2] = 1;
+    numbers_left[3] = 2;
+    numbers_left[4] = 2;
+    numbers_left[5] = 2;
+    numbers_left[6] = 2;
+    numbers_left[8] = 2;
+    numbers_left[9] = 2;
+    numbers_left[10] = 2;
+    numbers_left[11] = 2;
+    numbers_left[12] = 1;
 }

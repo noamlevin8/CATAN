@@ -20,6 +20,7 @@ namespace ariel {
         Player& _p2;
         Player& _p3;
         Board _GameBoard;
+        //static Point _blocker_place
 
         public:
                 inline Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3) {};
