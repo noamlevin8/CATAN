@@ -4,7 +4,4 @@
 // ID: 326662574
 // MAIL: noamlevin11@gmail.com
 
-#include "Point.hpp"
-
-namespace ariel {
-} // ariel
+#include "Card.hpp"

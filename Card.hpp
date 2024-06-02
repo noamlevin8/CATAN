@@ -8,10 +8,10 @@
 
 namespace ariel {
 
-    class Point {
-        int x;
-        int y;
+    class Card {
+        string Card_Type;
 
+        inline Card get_card() { return this->Card_Type };
 
     };
 }

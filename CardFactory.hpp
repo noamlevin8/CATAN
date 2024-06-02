@@ -4,7 +4,12 @@
 // ID: 326662574
 // MAIL: noamlevin11@gmail.com
 
-#include "Point.hpp"
+#pragma once
 
 namespace ariel {
-} // ariel
+
+    class CardFactory {
+        static Card createCard(string type);
+    };
+
+}

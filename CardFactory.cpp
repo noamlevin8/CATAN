@@ -4,7 +4,10 @@
 // ID: 326662574
 // MAIL: noamlevin11@gmail.com
 
-#include "Point.hpp"
+#include "CardFactory.hpp"
 
 namespace ariel {
-} // ariel
+    Card CardFactory::createCard(string type) {
+        return null;
+    }
+}
