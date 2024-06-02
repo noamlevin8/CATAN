@@ -8,6 +8,8 @@
 
 #include <iostream>
 #include <vector>
+#include "Vertex.hpp"
+#include "Edge.hpp"
 
 using namespace std;
 
@@ -17,8 +19,10 @@ namespace ariel {
 
         // Fields
         int _num;
-        string type;
-        vector<Point> _vertices;
-        vector<Edge> _edges;
+        string _type;
+        vector<Edge&> _edges;
+
+        public:
+                Hexagon(int n, string t) { this->_num = n; this->_type = t;};
     };
 }

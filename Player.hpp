@@ -17,7 +17,6 @@ namespace ariel{
         // Fields
 
         string _name; // Players name
-        static int _turn; // Current turn index
         int _index; // Players index in the game
         
         int _points = 0; // Players number of points
@@ -31,17 +30,19 @@ namespace ariel{
         int _numOfWheat = 0;
 
         public:
+                static int _turn; // Current turn index
+
                 Player(string name); // Constructor
-                void placeSettelemnt(vector<string> places, vector<int> placesNum, Board board);
+                void placeSettelement(vector<string> places, vector<int> placesNum, Board board);
                 void placeRoad(vector<string> places, vector<int> placesNum, Board board);
                 void rollDice();
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
                 void buyDevelopmentCard();
-                void printPoints();
+                void printPoints() const;
 
-                inline string getName() {return this->_name;};
-                inline static int getTurn() {return _turn;};
+                inline string getName() const {return this->_name;};
+                inline static int getTurn() const {return _turn;};
                 inline void setIdx(int num) {this->_index = num;};
 
                 // inline void addWood(int num) {this->_numOfWood += num;};
@@ -59,6 +60,6 @@ namespace ariel{
                 // inline void addWheat(int num) {this->_numOfWheat += num;};
                 // inline void subWheat(int num) {this->_numOfWheat -= num;};
 
-                inline int getPoints() {return this->_points;};
+                inline int getPoints() const {return this->_points;};
     };
 }

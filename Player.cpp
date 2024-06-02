@@ -12,7 +12,7 @@ Player::Player(string name)
     this->_index = 0; 
 }
 
-void Player::placeSettelemnt(vector<string> places, vector<int> placesNum, Board board)
+void Player::placeSettelement(vector<string> places, vector<int> placesNum, Board board)
 {
     if(Player::getTurn() != this->_index)
         throw invalid_argument("Not your turn!");
@@ -115,7 +115,7 @@ void Player::buyDevelopmentCard()
     }
 }
 
-void Player::printPoints()
+void Player::printPoints() const
 {
     cout << this->_name << " has " << this->_points;
     cout << " points because he/she has: ";

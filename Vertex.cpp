@@ -4,7 +4,7 @@
 // ID: 326662574
 // MAIL: noamlevin11@gmail.com
 
-#include "Point.hpp"
+#include "Vertex.hpp"
 
 namespace ariel {
 } // ariel

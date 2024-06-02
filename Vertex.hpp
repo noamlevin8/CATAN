@@ -8,10 +8,11 @@
 
 namespace ariel {
 
-    class Point {
-        int x;
-        int y;
+    class Vertex {
+        int _x;
+        int _y;
 
-
+        public:
+                Vertex(int x, int y) : _x(x), _y(y) {};
     };
 }

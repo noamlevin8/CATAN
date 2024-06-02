@@ -6,6 +6,18 @@
 namespace ariel {
 
     Board::Board() {
+
+        this->_cBoard = vector<Hexagon>(19, null);
+
+        // Random number
+        //Hexagon h1 = new Hexagon(1, "");
+
+
+
+
+
+
+
         vector <vector<string>> gameBoard(9, vector<string>(10, "   "));
 
         size_t i, j;

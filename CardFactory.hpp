@@ -9,7 +9,8 @@
 namespace ariel {
 
     class CardFactory {
-        static Card createCard(string type);
+        public:
+                static Card createCard(string type);
     };
 
 }

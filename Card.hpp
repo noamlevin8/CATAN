@@ -11,7 +11,8 @@ namespace ariel {
     class Card {
         string Card_Type;
 
-        inline Card get_card() { return this->Card_Type };
+        public:
+                inline Card get_card() { return this->Card_Type };
 
     };
 }

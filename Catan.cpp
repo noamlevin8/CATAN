@@ -3,6 +3,8 @@
 
 #include "Catan.hpp"
 
+using namespace std;
+
 namespace ariel {
 
     void Catan::ChooseStartingPlayer() {
@@ -17,7 +19,7 @@ namespace ariel {
         int random_number = dis(gen);
 
         // Output the random number
-        cout << "The player that starts is: " << random_number << std::endl;
+        cout << "The player that starts is: " << random_number << endl;
 
         if (random_number == 1) {
             _p1.setIdx(1);
@@ -34,11 +36,11 @@ namespace ariel {
         }
     }
 
-    Board Catan::getBoard() {
+    Board Catan::getBoard() const {
 
     }
 
-    void Catan::printWinner() {
+    void Catan::printWinner() const {
         if (_p1.getPoints() == 10)
             cout << "The winner is: " << _p1.getName() << endl;
 
