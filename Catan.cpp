@@ -41,16 +41,16 @@ namespace ariel {
     }
 
     void Catan::printWinner() const {
-        if (_p1.getPoints() == 10)
+        if (_p1.getPoints() >= 10)
             cout << "The winner is: " << _p1.getName() << endl;
 
-        else if (_p2.getPoints() == 10)
+        else if (_p2.getPoints() >= 10)
             cout << "The winner is: " << _p2.getName() << endl;
 
-        else if (_p3.getPoints() == 10)
+        else if (_p3.getPoints() >= 10)
             cout << "The winner is: " << _p3.getName() << endl;
 
         else
-            cout << "None" << endl;
+            cout << "None of the players has 10 points" << endl;
     }
 }

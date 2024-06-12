@@ -5,3 +5,5 @@
 // MAIL: noamlevin11@gmail.com
 
 #include "Card.hpp"
+
+using namespace ariel;
