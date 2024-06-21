@@ -6,4 +6,6 @@
 
 #include "Card.hpp"
 
-using namespace ariel;
+namespace ariel{
+
+}

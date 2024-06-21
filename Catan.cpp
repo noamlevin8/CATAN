@@ -37,7 +37,7 @@ namespace ariel {
     }
 
     Board Catan::getBoard() const {
-
+        return this->_GameBoard;
     }
 
     void Catan::printWinner() const {

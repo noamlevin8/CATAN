@@ -23,7 +23,8 @@ namespace ariel {
         //static Point _blocker_place
 
         public:
-                Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3) {};
+                Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3), _GameBoard(Board()) {};
+                ~Catan();
                 void ChooseStartingPlayer();
                 Board getBoard() const;
                 void printWinner() const;

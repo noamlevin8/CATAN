@@ -32,20 +32,22 @@ namespace ariel{
         int _numOfWheat = 0;
 
         public:
-                static int _turn = 1; // Current turn index
+                static int _turn; // Current turn index
 
                 Player(string name); // Constructor
+                ~Player();
+
                 void placeCity(vector<string> places, vector<int> placesNum, Board board);
                 void placeSettlement(vector<string> places, vector<int> placesNum, Board board);
                 void placeRoad(vector<string> places, vector<int> placesNum, Board board);
-                void rollDice();
+                void rollDice(); // Maybe const
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
                 void buyDevelopmentCard();
                 void printPoints() const;
 
                 inline string getName() const {return this->_name;};
-                inline static int getTurn() const {return _turn;};
+//                inline static int getTurn() {return this->_turn;};
                 inline void setIdx(int num) {this->_index = num;};
 
                 inline void addWood(int num) {this->_numOfWood += num;};
@@ -63,11 +65,11 @@ namespace ariel{
                 inline void addWheat(int num) {this->_numOfWheat += num;};
                 inline void subWheat(int num) {this->_numOfWheat -= num;};
 
-                inline int getNumOfWood() {return this->_numOfWood;};
-                inline int getNumOfBrick() {return this->_numOfBrick;};
-                inline int getNumOfSheep() {return this->_numOfSheep;};
-                inline int getNumOfStone() {return this->_numOfStone;};
-                inline int getNumOfWheat() {return this->_numOfWheat;};
+                inline int getNumOfWood() const {return this->_numOfWood;};
+                inline int getNumOfBrick() const {return this->_numOfBrick;};
+                inline int getNumOfSheep() const {return this->_numOfSheep;};
+                inline int getNumOfStone() const {return this->_numOfStone;};
+                inline int getNumOfWheat() const {return this->_numOfWheat;};
 
                 inline int getPoints() const {return this->_points;};
     };
