@@ -23,7 +23,7 @@ namespace ariel {
                          Place(), Place(), Place(), Place(),
                          Place(), Place(), Place()};
 
-        vector<unsigned int> nums = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11, 9, 7};
+        vector<unsigned int> nums = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
         vector <string> types = {"Wood", "Wood", "Wood", "Wood",
                                  "Wheat", "Wheat", "Wheat", "Wheat",
                                  "Brick", "Brick", "Brick", "Brick",
@@ -31,6 +31,7 @@ namespace ariel {
                                  "Sheep", "Sheep", "Sheep"};
         unsigned seed = std::chrono::system_clock::now().time_since_epoch().count();
         std::shuffle(types.begin(), types.end(), std::default_random_engine(seed));
+        std::shuffle(nums.begin(), nums.end(), std::default_random_engine(seed));
 
         this->_places[0].add_info({types[0]}, {nums[0]}, {4, 5}, 1);
         this->_places[1].add_info({types[1]}, {nums[1]}, {5, 6}, 2);
@@ -54,27 +55,27 @@ namespace ariel {
 
         this->_places[16].add_info({types[10], types[11]}, {nums[10], nums[11]}, {12, 22, 23}, 17);
         this->_places[17].add_info({types[17], types[11], types[12]}, {nums[17], nums[11], nums[12]}, {23, 23, 13}, 18);
-        this->_places[18].add_info({"Desert", types[12], types[13]}, {nums[18], nums[12], nums[13]}, {24, 25, 14}, 19);
+        this->_places[18].add_info({"Desert", types[12], types[13]}, {7, nums[12], nums[13]}, {24, 25, 14}, 19);
         this->_places[19].add_info({types[14], types[3], types[13]}, {nums[14], nums[3], nums[13]}, {25, 26, 15}, 20);
         this->_places[20].add_info({types[4], types[3]}, {nums[4], nums[3]}, {26, 27, 16}, 21);
 
         this->_places[21].add_info({types[10]}, {nums[10]}, {17, 28}, 22);
         this->_places[22].add_info({types[10], types[11], types[17]}, {nums[10], nums[11], nums[17]}, {17, 18, 29}, 23);
-        this->_places[23].add_info({types[12], types[17], "Desert"}, {nums[12], nums[17], nums[18]}, {18, 19, 30}, 24);
-        this->_places[24].add_info({types[13], types[14], "Desert"}, {nums[13], nums[14], nums[18]}, {19, 20, 31}, 25);
+        this->_places[23].add_info({types[12], types[17], "Desert"}, {nums[12], nums[17], 7}, {18, 19, 30}, 24);
+        this->_places[24].add_info({types[13], types[14], "Desert"}, {nums[13], nums[14], 7}, {19, 20, 31}, 25);
         this->_places[25].add_info({types[3], types[4], types[14]}, {nums[3], nums[4], nums[14]}, {20, 21, 32}, 26);
         this->_places[26].add_info({types[4]}, {nums[4]}, {21, 33}, 27);
 
         this->_places[27].add_info({types[10]}, {nums[10]}, {34, 22}, 28);
         this->_places[28].add_info({types[9], types[10], types[17]}, {nums[9], nums[10], nums[17]}, {34, 35, 23}, 29);
-        this->_places[29].add_info({types[16], types[17], "Desert"}, {nums[16], nums[17], nums[18]}, {35, 36, 23}, 30);
-        this->_places[30].add_info({types[15], types[14], "Desert"}, {nums[15], nums[14], nums[18]}, {36, 37, 25}, 31);
+        this->_places[29].add_info({types[16], types[17], "Desert"}, {nums[16], nums[17], 7}, {35, 36, 23}, 30);
+        this->_places[30].add_info({types[15], types[14], "Desert"}, {nums[15], nums[14], 7}, {36, 37, 25}, 31);
         this->_places[31].add_info({types[5], types[4], types[14]}, {nums[5], nums[4], nums[14]}, {37, 38, 26}, 32);
         this->_places[32].add_info({types[4]}, {nums[4]}, {38, 27}, 33);
 
         this->_places[33].add_info({types[9], types[10]}, {nums[9], nums[10]}, {28, 39, 29}, 34);
         this->_places[34].add_info({types[9], types[16], types[17]}, {nums[9], nums[16], nums[17]}, {29, 30, 40}, 35);
-        this->_places[35].add_info({types[15], types[16], "Desert"}, {nums[15], nums[16], nums[18]}, {30, 31, 41}, 36);
+        this->_places[35].add_info({types[15], types[16], "Desert"}, {nums[15], nums[16], 7}, {30, 31, 41}, 36);
         this->_places[36].add_info({types[5], types[14], types[15]}, {nums[5], nums[14], nums[15]}, {31, 32, 42}, 37);
         this->_places[37].add_info({types[4], types[5]}, {nums[4], nums[5]}, {32, 33, 43}, 38);
 
