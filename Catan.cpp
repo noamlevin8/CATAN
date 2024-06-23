@@ -7,6 +7,8 @@ using namespace std;
 
 namespace ariel {
 
+    Catan::~Catan() {}
+
     void Catan::ChooseStartingPlayer() {
         // Create a random device and seed the random number generator
         random_device rd;
@@ -18,21 +20,21 @@ namespace ariel {
         // Generate a random integer in the range [1, 3]
         int random_number = dis(gen);
 
-        // Output the random number
-        cout << "The player that starts is: " << random_number << endl;
-
         if (random_number == 1) {
             _p1.setIdx(1);
             _p2.setIdx(2);
             _p3.setIdx(3);
+            cout << "The player that starts is: " << _p1.getName() << endl;
         } else if (random_number == 2) {
             _p2.setIdx(1);
             _p3.setIdx(2);
             _p1.setIdx(3);
+            cout << "The player that starts is: " << _p2.getName() << endl;
         } else {
             _p3.setIdx(1);
             _p1.setIdx(2);
             _p2.setIdx(3);
+            cout << "The player that starts is: " << _p3.getName() << endl;
         }
     }
 

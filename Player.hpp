@@ -3,10 +3,12 @@
 
 #pragma once
 
+#include "Board.hpp"
+
 #include <iostream>
 #include <vector>
 #include <random>
-#include "Board.hpp"
+#include <string>
 
 using namespace std;
 
@@ -18,7 +20,8 @@ namespace ariel{
 
         string _name; // Players name
         int _index; // Players index in the game
-        
+        string _color;
+
         int _points = 0; // Players number of points
         int _numOfCities = 0;
         int _numOfSettlements = 0;
@@ -37,9 +40,9 @@ namespace ariel{
                 Player(string name); // Constructor
                 ~Player();
 
-                void placeCity(vector<string> places, vector<int> placesNum, Board board);
-                void placeSettlement(vector<string> places, vector<int> placesNum, Board board);
-                void placeRoad(vector<string> places, vector<int> placesNum, Board board);
+                void placeCity(unsigned int place_id, Board board);
+                void placeSettlement(unsigned int place_id, Board board);
+                void placeRoad(unsigned int from, unsigned int to, Board board);
                 void rollDice(); // Maybe const
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);

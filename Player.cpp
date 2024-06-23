@@ -12,14 +12,38 @@ namespace ariel {
         _turn = 1;
     }
 
-    void Player::placeSettlement(vector <string> places, vector<int> placesNum, Board board) {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+    void Player::placeSettlement(unsigned int place_id, Board board) {
+        if (_turn != this->_index) {
+//            throw invalid_argument("Not your turn!");
+            cout << "Not your turn!" << endl;
+            return;
+        }
 
-        if (this->_numOfBrick < 1 || this->_numOfWood < 1 || this->_numOfSheep < 1 || this->_numOfWheat < 1)
-            throw invalid_argument("You don't have enough sources!");
+        if (this->_numOfBrick < 1 || this->_numOfWood < 1 || this->_numOfSheep < 1 || this->_numOfWheat < 1) {
+//            throw invalid_argument("You don't have enough resources!");
+            cout << "You don't have enough resources!" << endl;
+            return;
+        }
 
         //Check for valid place
+        if(place_id < 1 || place_id > 54) {
+            cout << "Not a valid place id" << endl;
+            return;
+        }
+
+        if(board.getPlace(place_id).getOwner() != ""){
+            cout << "This place is not empty" << endl;
+            return;
+        }
+
+        vector<unsigned int> neighbors = board.getPlace(place_id).getNeighbors();
+
+        for(unsigned int i = 0; i < neighbors.size(); i++){
+            if(board.getPlace(neighbors[i]).getOwner() != ""){
+                cout << "There is a neighbor settlement" << endl;
+                return;
+            }
+        }
 
         this->_numOfBrick--;
         this->_numOfWood--;
@@ -27,43 +51,164 @@ namespace ariel {
         this->_numOfWheat--;
 
         //Place the settlement
+        board.setOwner(place_id, this->_color);
 
         this->_numOfSettlements++;
         this->_points++;
     }
 
-    void Player::placeCity(vector <std::string> places, vector<int> placesNum, ariel::Board board) {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+    void Player::placeCity(unsigned int place_id, Board board) {
+        if (_turn != this->_index) {
+//            throw invalid_argument("Not your turn!");
+            cout << "Not your turn!" << endl;
+            return;
+        }
 
-        if (this->_numOfStone < 3 || this->_numOfWheat < 2)
-            throw invalid_argument("You don't have enough sources!");
+        if (this->_numOfStone < 3 || this->_numOfWheat < 2) {
+//            throw invalid_argument("You don't have enough resources!");
+            cout << "You don't have enough resources!" << endl;
+            return;
+        }
 
         //Check for valid place
+        if(place_id < 1 || place_id > 54) {
+            cout << "Not a valid place id" << endl;
+            return;
+        }
+
+        if(board.getPlace(place_id).getOwner() != this->_color){
+            cout << "This place is not yours" << endl;
+            return;
+        }
 
         this->_numOfStone -= 3;
         this->_numOfWheat -= 2;
 
         //Place the city
+        board.setOwner(place_id, this->_color.replace(2, 2, "1;"));
 
         this->_numOfCities++;
         this->_numOfSettlements--;
         this->_points++;
     }
 
-    void Player::placeRoad(vector <string> places, vector<int> placesNum, Board board) {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+    void Player::placeRoad(unsigned int from, unsigned int to, Board board) {
+        if (_turn != this->_index){
+//            throw invalid_argument("Not your turn!");
+            cout << "Not your turn!" << endl;
+            return;
+        }
 
-        if (this->_numOfBrick < 1 || this->_numOfWood < 1)
-            throw invalid_argument("You don't have 1 Brick and 1 Wood!");
+        if (this->_numOfBrick < 1 || this->_numOfWood < 1) {
+//            throw invalid_argument("You don't have 1 Brick and 1 Wood!");
+            cout << "You don't have 1 Brick and 1 Wood!" << endl;
+            return;
+        }
 
         //Check for valid place
+        if(from < 1 || from > 54 || to < 1 || to > 54){
+            cout << "Not a valid place for a road" << endl;
+            return;
+        }
+
+        if(!board.getPlace(from).closeTo(board.getPlace(to))){
+            cout << "There is no road from " << from << " to " << to << endl;
+            return;
+        }
+
+        vector<string> roads = board.getPlace(from).getRoads();
+        bool neighborRoad = false;
+
+        for(unsigned int i = 0; i < roads.size(); i++){
+            if(roads[i] == this->_color){ neighborRoad = true; }
+        }
+
+        roads = board.getPlace(to).getRoads();
+
+        for(unsigned int i = 0; i < roads.size(); i++){
+            if(roads[i] == this->_color){ neighborRoad = true; }
+        }
+
+        if(!neighborRoad){
+            cout << "Cant place a road that is not connected to a settlement or a road" << endl;
+            return;
+        }
+
+//        if(!firstTurn && this->_color != board.getPlace(from).getOwner() && this->_color != board.getPlace(to).getOwner()){
+//            vector<string> roads = board.getPlace(from).getRoads();
+//            bool check1 = false, check2 = false;
+//
+//            for(unsigned int i = 0; i < roads.size(); i++){
+//                if(roads[i] == this->_color) {
+//                    check1 = true;
+//                    break;
+//                }
+//            }
+//
+//            roads = board.getPlace(to).getRoads();
+//
+//            for(unsigned int i = 0; i < roads.size(); i++){
+//                if(roads[i] == this->_color) {
+//                    check2 = true;
+//                    break;
+//                }
+//            }
+//
+//            if(!check1 && !check2) {
+//                cout << "You can't put a road without it being connected to one of your settlements or roads" << endl;
+//                return;
+//            }
+//        }
 
         this->_numOfBrick--;
         this->_numOfWood--;
 
         //Place the road
+        if(this->_color == board.getPlace(from).getOwner() || this->_color == board.getPlace(to).getOwner()){
+            vector<unsigned int> neighbors = board.getPlace(from).getNeighbors();
+
+            for(unsigned int i = 0; i < neighbors.size(); i++){
+                if(board.getPlace(neighbors[i]) == board.getPlace(to)){
+                    if(board.getPlace(from).getRoadOwner(i) == ""){
+                        board.getPlace(from).setRoadOwner(this->_color, i);
+
+                        vector<unsigned int> neighbors2 = board.getPlace(to).getNeighbors();
+                        for(unsigned int i = 0; i < neighbors2.size(); i++){
+                            if(board.getPlace(neighbors2[i]) == board.getPlace(from)){
+                                board.getPlace(to).setRoadOwner(this->_color, i);
+                            }
+                        }
+
+                        return;
+                    }
+                    cout << "The road is already occupied" << endl;
+                    return;
+                }
+            }
+        }
+
+        if((board.getPlace(from).getOwner() == "" || this->_color != board.getPlace(from).getOwner().replace(2, 2, "0;"))
+           && (board.getPlace(to).getOwner() == "" || this->_color != board.getPlace(to).getOwner().replace(2, 2, "0;"))){
+            vector<unsigned int> neighbors = board.getPlace(from).getNeighbors();
+
+            for(unsigned int i = 0; i < neighbors.size(); i++){
+                if(board.getPlace(neighbors[i]) == board.getPlace(to)){
+                    if(board.getPlace(from).getRoadOwner(i) == ""){
+                        board.getPlace(from).setRoadOwner(this->_color, i);
+
+                        vector<unsigned int> neighbors2 = board.getPlace(to).getNeighbors();
+                        for(unsigned int i = 0; i < neighbors2.size(); i++){
+                            if(board.getPlace(neighbors2[i]) == board.getPlace(from)){
+                                board.getPlace(to).setRoadOwner(this->_color, i);
+                            }
+                        }
+                        return;
+                    }
+                    cout << "The road is already occupied" << endl;
+                    return;
+                }
+            }
+        }
     }
 
     void Player::rollDice() {

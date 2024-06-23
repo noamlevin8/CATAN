@@ -3,13 +3,53 @@
 
 #pragma once
 
+#include "Player.hpp"
+#include "Catan.hpp"
+
+#include <iostream>
+#include <string>
+#include <memory>
+
 namespace ariel {
 
     class Card {
         string Card_Type;
 
         public:
-                inline Card get_card() { return this->Card_Type };
+                Card(string type) : Card_Type(type) {};
+                virtual ~Card();
+                inline Card get_cardType() const { return this->Card_Type };
+                virtual void use_card(Player &p, Catan &c);
 
+    };
+
+    class Monopoly : public Card {
+        public:
+                Monopoly();
+                void use_card(Player &p, Catan &c) override;
+    };
+
+    class Build2Roads : public Card {
+        public:
+                Build2Roads();
+                void use_card(Player &p, Catan &c) override;
+    };
+
+    class YearOfPlenty : public Card {
+        public:
+                YearOfPlenty();
+                void use_card(Player &p, Catan &c) override;
+    };
+
+    class Knight : public Card {
+        public:
+                Knight();
+                void use_card(Player &p, Catan &c) override;
+    };
+
+    class VictoryPoint : public Card {
+        public:
+                VictoryPoint();
+                void use_card(Player &p, Catan &c) override;
     };
 }
