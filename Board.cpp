@@ -135,8 +135,7 @@ namespace ariel {
         cout << "         " << road(43, 47, "|") << this->_places[39].getType(0) << road(44, 48, "|") << this->_places[40].getType(0) << road(45, 49, "|") << this->_places[41].getType(0) << road(46, 50, "|") << endl;
         cout << "        " << this->_places[47] << this->_places[48] << this->_places[49] << this->_places[50] << endl;
         cout << "           " << road(47, 51, "\\    ") << road(48, 51, "/  ") << road(48, 52, "\\    ") << road(49, 52, "/  ") << road(49, 53, "\\    ") << road(50, 53, "/  ") << endl;
-        cout << "            " << this->_places[51] << this->_places[52] << this->_places[53]
-             << "\n\n-----------------------------------\n\n";
+        cout << "            " << this->_places[51] << this->_places[52] << this->_places[53] << "\n\n----------------------------------------------\n\n";
     }
 }
 

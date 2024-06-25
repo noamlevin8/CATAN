@@ -14,9 +14,9 @@ using namespace ariel;
 
 int main()
 {
-    Player p1("Amit");
-    Player p2("Yossi");
-    Player p3("Dana");
+    Player p1("Amit", "\033[0;34m"); // Blue color
+    Player p2("Yossi", "\033[0;31m"); // Red color
+    Player p3("Dana", "\033[0;32m"); // Green color
     Catan catan(p1, p2, p3);
     // Starting of the game. Every player places two settlements and two roads.
     catan.ChooseStartingPlayer();   // should print the name of the starting player, assume it is Amit.

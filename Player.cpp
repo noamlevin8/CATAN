@@ -6,18 +6,21 @@
 namespace ariel {
     int Player::_turn = 0;
 
-    Player::Player(string name) {
+    Player::Player(string name, string color) {
         this->_name = name;
         this->_index = 0;
+        this->_color = color;
         _turn = 1;
     }
 
-    void Player::placeSettlement(unsigned int place_id, Board board) {
-        if (_turn != this->_index) {
-//            throw invalid_argument("Not your turn!");
-            cout << "Not your turn!" << endl;
-            return;
-        }
+    Player::~Player() {}
+
+    void Player::placeSettlement(unsigned int place_id, Board &board) {
+//        if (_turn != this->_index) {
+////            throw invalid_argument("Not your turn!");
+//            cout << "Not your turn!" << endl;
+//            return;
+//        }
 
         if (this->_numOfBrick < 1 || this->_numOfWood < 1 || this->_numOfSheep < 1 || this->_numOfWheat < 1) {
 //            throw invalid_argument("You don't have enough resources!");
@@ -57,12 +60,12 @@ namespace ariel {
         this->_points++;
     }
 
-    void Player::placeCity(unsigned int place_id, Board board) {
-        if (_turn != this->_index) {
-//            throw invalid_argument("Not your turn!");
-            cout << "Not your turn!" << endl;
-            return;
-        }
+    void Player::placeCity(unsigned int place_id, Board &board) {
+//        if (_turn != this->_index) {
+////            throw invalid_argument("Not your turn!");
+//            cout << "Not your turn!" << endl;
+//            return;
+//        }
 
         if (this->_numOfStone < 3 || this->_numOfWheat < 2) {
 //            throw invalid_argument("You don't have enough resources!");
@@ -92,12 +95,12 @@ namespace ariel {
         this->_points++;
     }
 
-    void Player::placeRoad(unsigned int from, unsigned int to, Board board) {
-        if (_turn != this->_index){
-//            throw invalid_argument("Not your turn!");
-            cout << "Not your turn!" << endl;
-            return;
-        }
+    void Player::placeRoad(unsigned int from, unsigned int to, Board &board) {
+//        if (_turn != this->_index){
+////            throw invalid_argument("Not your turn!");
+//            cout << "Not your turn!" << endl;
+//            return;
+//        }
 
         if (this->_numOfBrick < 1 || this->_numOfWood < 1) {
 //            throw invalid_argument("You don't have 1 Brick and 1 Wood!");
@@ -211,9 +214,9 @@ namespace ariel {
         }
     }
 
-    void Player::rollDice() {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+    int Player::rollDice() {
+//        if (_turn != this->_index)
+//            throw invalid_argument("Not your turn!");
 
         // Create a random device and seed the random number generator
         random_device rd;
@@ -227,8 +230,7 @@ namespace ariel {
 
         // Output the random number
         cout << "Dice roll result: " << random_number << std::endl;
-
-        //Update players resources
+        return random_number;
     }
 
     void Player::trade(Player &p2, string give, string get, int give_num, int get_num) {
@@ -242,9 +244,84 @@ namespace ariel {
                 return;
             }
 
-            this->_numOfWood -= give_num;
-            p2.addWood(give_num);
+            if (get == "wood") {
+                if (p2.getNumOfWood() < get_num) {
+                    //throw exception("You don't have enough wood!");
+                    cout << "P2 don't have enough wood!" << endl;
+                    return;
+                }
+
+                this->_numOfWood += get_num;
+                p2.subWood(get_num);
+
+                this->_numOfWood -= give_num;
+                p2.addWood(give_num);
+
+                return;
+            }
+            if (get == "brick") {
+                if (p2.getNumOfBrick() < get_num) {
+                    //throw exception("P2 don't have enough brick!");
+                    cout << "P2 don't have enough brick!" << endl;
+                    return;
+                }
+
+                this->_numOfBrick += get_num;
+                p2.subBrick(get_num);
+
+                this->_numOfWood -= give_num;
+                p2.addWood(give_num);
+
+                return;
+            }
+            if (get == "sheep") {
+                if (p2.getNumOfSheep() < get_num) {
+                    //throw exception("P2 don't have enough sheep!");
+                    cout << "P2 don't have enough sheep!" << endl;
+                    return;
+                }
+
+                this->_numOfSheep += get_num;
+                p2.subSheep(get_num);
+
+                this->_numOfWood -= give_num;
+                p2.addWood(give_num);
+
+                return;
+            }
+            if (get == "stone") {
+                if (p2.getNumOfStone() < get_num) {
+                    //throw exception("P2 don't have enough stone!");
+                    cout << "P2 don't have enough stone!" << endl;
+                    return;
+                }
+
+                this->_numOfStone += get_num;
+                p2.subStone(get_num);
+
+                this->_numOfWood -= give_num;
+                p2.addWood(give_num);
+
+                return;
+            }
+            if (get == "wheat") {
+                if (p2.getNumOfWheat() < get_num) {
+                    //throw exception("P2 don't have enough wheat!");
+                    cout << "P2 don't have enough wheat!" << endl;
+                    return;
+                }
+
+                this->_numOfWheat += get_num;
+                p2.subWheat(get_num);
+
+                this->_numOfWood -= give_num;
+                p2.addWood(give_num);
+
+                return;
+            }
         }
+
+
         if (give == "brick") {
             if (this->_numOfBrick < give_num) {
                 //throw exception("You don't have enough brick!");
@@ -252,9 +329,84 @@ namespace ariel {
                 return;
             }
 
-            this->_numOfBrick -= give_num;
-            p2.addBrick(give_num);
+            if (get == "wood") {
+                if (p2.getNumOfWood() < get_num) {
+                    //throw exception("You don't have enough wood!");
+                    cout << "P2 don't have enough wood!" << endl;
+                    return;
+                }
+
+                this->_numOfWood += get_num;
+                p2.subWood(get_num);
+
+                this->_numOfBrick -= give_num;
+                p2.addBrick(give_num);
+
+                return;
+            }
+            if (get == "brick") {
+                if (p2.getNumOfBrick() < get_num) {
+                    //throw exception("P2 don't have enough brick!");
+                    cout << "P2 don't have enough brick!" << endl;
+                    return;
+                }
+
+                this->_numOfBrick += get_num;
+                p2.subBrick(get_num);
+
+                this->_numOfBrick -= give_num;
+                p2.addBrick(give_num);
+
+                return;
+            }
+            if (get == "sheep") {
+                if (p2.getNumOfSheep() < get_num) {
+                    //throw exception("P2 don't have enough sheep!");
+                    cout << "P2 don't have enough sheep!" << endl;
+                    return;
+                }
+
+                this->_numOfSheep += get_num;
+                p2.subSheep(get_num);
+
+                this->_numOfBrick -= give_num;
+                p2.addBrick(give_num);
+
+                return;
+            }
+            if (get == "stone") {
+                if (p2.getNumOfStone() < get_num) {
+                    //throw exception("P2 don't have enough stone!");
+                    cout << "P2 don't have enough stone!" << endl;
+                    return;
+                }
+
+                this->_numOfStone += get_num;
+                p2.subStone(get_num);
+
+                this->_numOfBrick -= give_num;
+                p2.addBrick(give_num);
+
+                return;
+            }
+            if (get == "wheat") {
+                if (p2.getNumOfWheat() < get_num) {
+                    //throw exception("P2 don't have enough wheat!");
+                    cout << "P2 don't have enough wheat!" << endl;
+                    return;
+                }
+
+                this->_numOfWheat += get_num;
+                p2.subWheat(get_num);
+
+                this->_numOfBrick -= give_num;
+                p2.addBrick(give_num);
+
+                return;
+            }
         }
+
+
         if (give == "sheep") {
             if (this->_numOfSheep < give_num) {
                 //throw exception("You don't have enough sheep!");
@@ -262,9 +414,84 @@ namespace ariel {
                 return;
             }
 
-            this->_numOfSheep -= give_num;
-            p2.addSheep(give_num);
+            if (get == "wood") {
+                if (p2.getNumOfWood() < get_num) {
+                    //throw exception("You don't have enough wood!");
+                    cout << "P2 don't have enough wood!" << endl;
+                    return;
+                }
+
+                this->_numOfWood += get_num;
+                p2.subWood(get_num);
+
+                this->_numOfSheep -= give_num;
+                p2.addSheep(give_num);
+
+                return;
+            }
+            if (get == "brick") {
+                if (p2.getNumOfBrick() < get_num) {
+                    //throw exception("P2 don't have enough brick!");
+                    cout << "P2 don't have enough brick!" << endl;
+                    return;
+                }
+
+                this->_numOfBrick += get_num;
+                p2.subBrick(get_num);
+
+                this->_numOfSheep -= give_num;
+                p2.addSheep(give_num);
+
+                return;
+            }
+            if (get == "sheep") {
+                if (p2.getNumOfSheep() < get_num) {
+                    //throw exception("P2 don't have enough sheep!");
+                    cout << "P2 don't have enough sheep!" << endl;
+                    return;
+                }
+
+                this->_numOfSheep += get_num;
+                p2.subSheep(get_num);
+
+                this->_numOfSheep -= give_num;
+                p2.addSheep(give_num);
+
+                return;
+            }
+            if (get == "stone") {
+                if (p2.getNumOfStone() < get_num) {
+                    //throw exception("P2 don't have enough stone!");
+                    cout << "P2 don't have enough stone!" << endl;
+                    return;
+                }
+
+                this->_numOfStone += get_num;
+                p2.subStone(get_num);
+
+                this->_numOfSheep -= give_num;
+                p2.addSheep(give_num);
+
+                return;
+            }
+            if (get == "wheat") {
+                if (p2.getNumOfWheat() < get_num) {
+                    //throw exception("P2 don't have enough wheat!");
+                    cout << "P2 don't have enough wheat!" << endl;
+                    return;
+                }
+
+                this->_numOfWheat += get_num;
+                p2.subWheat(get_num);
+
+                this->_numOfSheep -= give_num;
+                p2.addSheep(give_num);
+
+                return;
+            }
         }
+
+
         if (give == "stone") {
             if (this->_numOfStone < give_num) {
                 //throw exception("You don't have enough stone!");
@@ -272,9 +499,84 @@ namespace ariel {
                 return;
             }
 
-            this->_numOfStone -= give_num;
-            p2.addStone(give_num);
+            if (get == "wood") {
+                if (p2.getNumOfWood() < get_num) {
+                    //throw exception("You don't have enough wood!");
+                    cout << "P2 don't have enough wood!" << endl;
+                    return;
+                }
+
+                this->_numOfWood += get_num;
+                p2.subWood(get_num);
+
+                this->_numOfStone -= give_num;
+                p2.addStone(give_num);
+
+                return;
+            }
+            if (get == "brick") {
+                if (p2.getNumOfBrick() < get_num) {
+                    //throw exception("P2 don't have enough brick!");
+                    cout << "P2 don't have enough brick!" << endl;
+                    return;
+                }
+
+                this->_numOfBrick += get_num;
+                p2.subBrick(get_num);
+
+                this->_numOfStone -= give_num;
+                p2.addStone(give_num);
+
+                return;
+            }
+            if (get == "sheep") {
+                if (p2.getNumOfSheep() < get_num) {
+                    //throw exception("P2 don't have enough sheep!");
+                    cout << "P2 don't have enough sheep!" << endl;
+                    return;
+                }
+
+                this->_numOfSheep += get_num;
+                p2.subSheep(get_num);
+
+                this->_numOfStone -= give_num;
+                p2.addStone(give_num);
+
+                return;
+            }
+            if (get == "stone") {
+                if (p2.getNumOfStone() < get_num) {
+                    //throw exception("P2 don't have enough stone!");
+                    cout << "P2 don't have enough stone!" << endl;
+                    return;
+                }
+
+                this->_numOfStone += get_num;
+                p2.subStone(get_num);
+
+                this->_numOfStone -= give_num;
+                p2.addStone(give_num);
+
+                return;
+            }
+            if (get == "wheat") {
+                if (p2.getNumOfWheat() < get_num) {
+                    //throw exception("P2 don't have enough wheat!");
+                    cout << "P2 don't have enough wheat!" << endl;
+                    return;
+                }
+
+                this->_numOfWheat += get_num;
+                p2.subWheat(get_num);
+
+                this->_numOfStone -= give_num;
+                p2.addStone(give_num);
+
+                return;
+            }
         }
+
+
         if (give == "wheat") {
             if (this->_numOfWheat < give_num) {
                 //throw exception("You don't have enough wheat!");
@@ -282,65 +584,87 @@ namespace ariel {
                 return;
             }
 
-            this->_numOfWheat -= give_num;
-            p2.addWheat(give_num);
-        }
+            if (get == "wood") {
+                if (p2.getNumOfWood() < get_num) {
+                    //throw exception("You don't have enough wood!");
+                    cout << "P2 don't have enough wood!" << endl;
+                    return;
+                }
 
-        if (get == "wood") {
-            if (p2.getNumOfWood() < get_num) {
-                //throw exception("You don't have enough wood!");
-                cout << "P2 don't have enough wood!" << endl;
+                this->_numOfWood += get_num;
+                p2.subWood(get_num);
+
+                this->_numOfWheat -= give_num;
+                p2.addWheat(give_num);
+
                 return;
             }
+            if (get == "brick") {
+                if (p2.getNumOfBrick() < get_num) {
+                    //throw exception("P2 don't have enough brick!");
+                    cout << "P2 don't have enough brick!" << endl;
+                    return;
+                }
 
-            this->_numOfWood += get_num;
-            p2.subWood(get_num);
-        }
-        if (get == "brick") {
-            if (p2.getNumOfBrick() < get_num) {
-                //throw exception("P2 don't have enough brick!");
-                cout << "P2 don't have enough brick!" << endl;
+                this->_numOfBrick += get_num;
+                p2.subBrick(get_num);
+
+                this->_numOfWheat -= give_num;
+                p2.addWheat(give_num);
+
                 return;
             }
+            if (get == "sheep") {
+                if (p2.getNumOfSheep() < get_num) {
+                    //throw exception("P2 don't have enough sheep!");
+                    cout << "P2 don't have enough sheep!" << endl;
+                    return;
+                }
 
-            this->_numOfBrick += get_num;
-            p2.subBrick(get_num);
-        }
-        if (get == "sheep") {
-            if (p2.getNumOfSheep() < get_num) {
-                //throw exception("P2 don't have enough sheep!");
-                cout << "P2 don't have enough sheep!" << endl;
+                this->_numOfSheep += get_num;
+                p2.subSheep(get_num);
+
+                this->_numOfWheat -= give_num;
+                p2.addWheat(give_num);
+
                 return;
             }
+            if (get == "stone") {
+                if (p2.getNumOfStone() < get_num) {
+                    //throw exception("P2 don't have enough stone!");
+                    cout << "P2 don't have enough stone!" << endl;
+                    return;
+                }
 
-            this->_numOfSheep += get_num;
-            p2.subSheep(get_num);
-        }
-        if (get == "stone") {
-            if (p2.getNumOfStone() < get_num) {
-                //throw exception("P2 don't have enough stone!");
-                cout << "P2 don't have enough stone!" << endl;
+                this->_numOfStone += get_num;
+                p2.subStone(get_num);
+
+                this->_numOfWheat -= give_num;
+                p2.addWheat(give_num);
+
                 return;
             }
+            if (get == "wheat") {
+                if (p2.getNumOfWheat() < get_num) {
+                    //throw exception("P2 don't have enough wheat!");
+                    cout << "P2 don't have enough wheat!" << endl;
+                    return;
+                }
 
-            this->_numOfStone += get_num;
-            p2.subStone(get_num);
-        }
-        if (get == "wheat") {
-            if (p2.getNumOfWheat() < get_num) {
-                //throw exception("P2 don't have enough wheat!");
-                cout << "P2 don't have enough wheat!" << endl;
+                this->_numOfWheat += get_num;
+                p2.subWheat(get_num);
+
+                this->_numOfWheat -= give_num;
+                p2.addWheat(give_num);
+
                 return;
             }
-
-            this->_numOfWheat += get_num;
-            p2.subWheat(get_num);
         }
     }
 
     void Player::buyDevelopmentCard() {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+//        if (_turn != this->_index)
+//            throw invalid_argument("Not your turn!");
 
         if (this->_numOfSheep < 1 || this->_numOfWheat < 1 || this->_numOfStone < 1) {
             //throw exception("You don't have enough resources!");
@@ -359,8 +683,12 @@ namespace ariel {
         cout << " points because he/she has: " << endl;
         cout << this->_numOfSettlements << " settlements" << endl;
         cout << this->_numOfCities << " cities" << endl;
-        if (this->_numOfPrinces == 3)
+        if (this->_numOfKnights == 3)
             cout << "2 points from the largest army card" << endl;
-        cout << this->_numOfBonusPoints << " bonus points" << endl;
+        cout << this->_numOfVictoryPoints << " victory points" << endl;
+    }
+
+    void useCard(Board &board, string type){
+
     }
 }

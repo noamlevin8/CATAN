@@ -25,8 +25,12 @@ namespace ariel{
         int _points = 0; // Players number of points
         int _numOfCities = 0;
         int _numOfSettlements = 0;
-        int _numOfBonusPoints = 0;
-        int _numOfPrinces = 0;
+
+        int _numOfVictoryPoints = 0;
+        int _numOfKnights = 0;
+        int _numOfMonopoly = 0;
+        int _numOfBuild2Roads = 0;
+        int _numOfYearOfPlenty = 0;
 
         int _numOfWood = 0;
         int _numOfBrick = 0;
@@ -37,21 +41,23 @@ namespace ariel{
         public:
                 static int _turn; // Current turn index
 
-                Player(string name); // Constructor
+                Player(string name, string color); // Constructor
                 ~Player();
 
-                void placeCity(unsigned int place_id, Board board);
-                void placeSettlement(unsigned int place_id, Board board);
-                void placeRoad(unsigned int from, unsigned int to, Board board);
-                void rollDice(); // Maybe const
+                void placeCity(unsigned int place_id, Board &board);
+                void placeSettlement(unsigned int place_id, Board &board);
+                void placeRoad(unsigned int from, unsigned int to, Board &board);
+                int rollDice(); // Maybe const
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
                 void buyDevelopmentCard();
                 void printPoints() const;
 
                 inline string getName() const {return this->_name;};
+                inline string getColor() const {return this->_color;};
 //                inline static int getTurn() {return this->_turn;};
                 inline void setIdx(int num) {this->_index = num;};
+                inline int getIdx() const {return this->_index;};
 
                 inline void addWood(int num) {this->_numOfWood += num;};
                 inline void subWood(int num) {this->_numOfWood -= num;};
@@ -75,5 +81,13 @@ namespace ariel{
                 inline int getNumOfWheat() const {return this->_numOfWheat;};
 
                 inline int getPoints() const {return this->_points;};
+
+                void useCard(Board &board, string type);
+
+                inline int getNumOfMonopoly() const {return this->_numOfMonopoly;};
+                inline int getNumOfBuild2Roads() const {return this->_numOfBuild2Roads;};
+                inline int getNumOfYearOfPlenty() const {return this->_numOfYearOfPlenty;};
+                inline int getNumOfKnights() const {return this->_numOfKnights;};
+                inline int getNumOfVictoryPoints() const {return this->_numOfVictoryPoints;};
     };
 }

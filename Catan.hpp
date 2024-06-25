@@ -25,8 +25,12 @@ namespace ariel {
         public:
                 Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3), _GameBoard(Board()) {};
                 ~Catan();
-                void ChooseStartingPlayer();
-                Board getBoard() const;
+                Player& ChooseStartingPlayer();
+                Board& getBoard();
                 void printWinner() const;
+                bool hasWinner() const;
+                Player& endTurn();
+                void updateResources(int dice);
+                Player& getPlayer(int i) const;
     };
 }
