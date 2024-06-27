@@ -32,5 +32,7 @@ namespace ariel {
                 Player& endTurn();
                 void updateResources(int dice);
                 Player& getPlayer(int i) const;
+                void firstTurn(Player &p);
+                void firstSettlements(Player &p);
     };
 }

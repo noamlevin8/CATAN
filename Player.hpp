@@ -50,6 +50,7 @@ namespace ariel{
                 int rollDice(); // Maybe const
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
+                void tradeBank(string give, string get);
                 void buyDevelopmentCard();
                 void printPoints() const;
 

@@ -8,10 +8,10 @@ CATANOBJ = Catan.o Player.o Board.o Game.o Place.o $(addprefix cards/, $(CARDSOB
 #TESTOBJ = Test.o TestCounter.o $(filter-out main.o, $(CATANOBJ))
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 
-all: Catan Game
+all: Catan
 
-Catan: $(CATANOBJ)
-	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
+#Catan: $(CATANOBJ)
+#	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
 
 Catan.o : Catan.cpp Catan.hpp
 	$(CXX) $(CXXFLAGS) -c Catan.cpp
@@ -28,14 +28,14 @@ Place.o : Place.cpp Place.hpp
 Game.o: Game.cpp
 	$(CXX) $(CXXFLAGS) -c Game.cpp
 
-Game: $(CATANOBJ)
-	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Game
+Catan: $(CATANOBJ)
+	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
 
 valgrind: Catan
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./Catan 2>&1 | { egrep "lost| at " || true; }
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 
 clean:
-	rm -f *.o Catan Game
+	rm -f *.o Catan
 
 .PHONY: all clean

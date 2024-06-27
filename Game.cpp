@@ -13,7 +13,7 @@ using namespace std;
 int main() {
     string name1, name2, name3;
 
-    cout << "Welcome to a Catan Game!\n Please insert your names" << endl;
+    cout << "\nWelcome to a Catan Game!\n\nPlease insert your names:" << endl;
     cout << "Player 1 (You're Blue):" << endl;
     cin >> name1;
     cout << "Player 2 (You're Red):" << endl;
@@ -30,15 +30,13 @@ int main() {
 
     Player player = catan.ChooseStartingPlayer(); // Prints the name of the first player
 
-//
-////    Board board = catan.getBoard(); // Get the board of the game
-//
-//    // Settlement assignment for the start of the game (need to create a function)
-//
-//
-//    catan.getBoard().printBoard(); // The start of the game
-//    cout << player.getName() << "'s turn!" << endl;
-//
+
+    // Settlement assignment for the start of the game (need to create a function)
+    catan.firstTurn(player);
+
+    catan.getBoard().printBoard(); // The start of the game
+    cout << player.getName() << "'s turn!" << endl;
+
 //    int dice, menu;
 //
 //
@@ -70,7 +68,7 @@ int main() {
 //            cout << "3 - Upgrade to city" << endl;
 //            cout << "4 - Trade resources with another player" << endl;
 //            cout << "5 - Trade cards with another player" << endl;
-//            cout << "6 - Trade with bank" << endl; // 4 resources from the same type (need to implement)
+//            cout << "6 - Trade with bank" << endl;
 //            cout << "7 - Buy development card" << endl;
 //            cout << "8 - Use development card" << endl;
 //            cout << "9 - - End turn" << endl;
@@ -176,7 +174,20 @@ int main() {
 //                    // Trade cards (needs implementation)
 //                    break;
 //                case 6:
-//                    // Trade with bank (needs implementation)
+//                    cout << "What do you want to give? (0 to change move)" << endl;
+//
+//                    string give, get;
+//
+//                    cin >> give;
+//
+//                    if(give == "0")
+//                        break;
+//
+//                    cout << "What do you want to get?" << endl;
+//                    cin >> get;
+//
+//                    player.tradeBank(give, get);
+//
 //                    break;
 //                case 7:
 //                    player.buyDevelopmentCard(); // (need to actually buy the card)
@@ -212,7 +223,7 @@ int main() {
 //    Board board = Board();
 //    board.printBoard();
 
-    catan.getBoard().printBoard();
+//    catan.getBoard().printBoard();
     return 0;
 }
 

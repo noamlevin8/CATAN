@@ -25,21 +25,21 @@ namespace ariel {
             this->_p2.setIdx(2);
             this->_p3.setIdx(3);
 
-            cout << "The player that starts is: " << this->_p1.getName() << endl;
+            cout << "\nThe player that starts is: " << this->_p1.getName() << endl;
             return this->_p1;
         } else if (random_number == 2) {
             this->_p2.setIdx(1);
             this->_p3.setIdx(2);
             this->_p1.setIdx(3);
 
-            cout << "The player that starts is: " << this->_p2.getName() << endl;
+            cout << "\nThe player that starts is: " << this->_p2.getName() << endl;
             return this->_p2;
         } else {
             this->_p3.setIdx(1);
             this->_p1.setIdx(2);
             this->_p2.setIdx(3);
 
-            cout << "The player that starts is: " << this->_p3.getName() << endl;
+            cout << "\nThe player that starts is: " << this->_p3.getName() << endl;
             return this->_p3;
         }
     }
@@ -132,4 +132,98 @@ namespace ariel {
 //        return NULL;
     }
 
+    void Catan::firstTurn(Player &p){
+        if(p.getIdx() == this->_p1.getIdx()){
+            firstSettlements(this->_p1);
+            firstSettlements(this->_p2);
+            firstSettlements(this->_p3);
+            firstSettlements(this->_p3);
+            firstSettlements(this->_p2);
+            firstSettlements(this->_p1);
+        } else if(p.getIdx() == this->_p2.getIdx()){
+            firstSettlements(this->_p2);
+            firstSettlements(this->_p3);
+            firstSettlements(this->_p1);
+            firstSettlements(this->_p1);
+            firstSettlements(this->_p3);
+            firstSettlements(this->_p2);
+        } else{
+            firstSettlements(this->_p3);
+            firstSettlements(this->_p1);
+            firstSettlements(this->_p2);
+            firstSettlements(this->_p2);
+            firstSettlements(this->_p1);
+            firstSettlements(this->_p3);
+        }
+    }
+
+    void Catan::firstSettlements(Player &p){
+        bool valid_place = false, check_nei = true;
+        unsigned int place;
+
+        this->_GameBoard.printBoard();
+        cout << p.getName() << ", where do you want to build the settlement?" << endl;
+
+        while (!valid_place) {
+            cin >> place;
+            if (place > 0 && place < 55) {
+                if(this->_GameBoard.getPlace(place).getOwner() == "") {
+                    vector<unsigned int> neighbors = this->_GameBoard.getPlace(place).getNeighbors();
+                    for(unsigned int i = 0; i < neighbors.size(); i++){
+                        if(this->_GameBoard.getPlace(neighbors[i]).getOwner() != ""){
+                            cout << "Can't place a settlement neighbor to another. Enter new place!" << endl;
+                            check_nei = false;
+                            break; // breaks from for loop only
+                        }
+                    }
+                    if(check_nei)
+                        valid_place = true;
+                    else
+                        check_nei = true;
+                }
+                else
+                    cout << "The place is not empty!. Enter new place!" << endl;
+            } else
+                cout << "Not a valid place. Enter new place!" << endl;
+        }
+
+        this->_GameBoard.setOwner(place, p.getColor());
+
+        unsigned int to;
+        bool valid_road = false;
+
+        cout << "\nNow the road." << endl;
+        while (!valid_road){
+            cout << "To: " << endl;
+            cin >> to;
+
+            if(to < 1 || to > 54){
+                cout << "Not a valid place. Try again!" << endl;
+                continue;
+            }
+
+            if(!this->_GameBoard.getPlace(place).closeTo(this->_GameBoard.getPlace(to))){
+                cout << "There's no road between " << place << " and " << to << ". Try again!" << endl;
+                continue;
+            }
+
+            valid_road = true;
+        }
+
+        vector<unsigned int> neighbors = this->_GameBoard.getPlace(to).getNeighbors();
+        for(unsigned int i = 0; i < neighbors.size(); i++){
+            if(this->_GameBoard.getPlace(neighbors[i]) == this->_GameBoard.getPlace(place)){
+                this->_GameBoard.getPlace(to).setRoadOwner(p.getColor(), i);
+            }
+        }
+
+        neighbors = this->_GameBoard.getPlace(place).getNeighbors();
+        for(unsigned int i = 0; i < neighbors.size(); i++){
+            if(this->_GameBoard.getPlace(neighbors[i]) == this->_GameBoard.getPlace(to)){
+                this->_GameBoard.getPlace(place).setRoadOwner(p.getColor(), i);
+            }
+        }
+
+//        this->_GameBoard.printBoard();
+    }
 }

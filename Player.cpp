@@ -15,6 +15,7 @@ namespace ariel {
 
     Player::~Player() {}
 
+    // need to check for 2 roads
     void Player::placeSettlement(unsigned int place_id, Board &board) {
 //        if (_turn != this->_index) {
 ////            throw invalid_argument("Not your turn!");
@@ -136,32 +137,6 @@ namespace ariel {
             cout << "Cant place a road that is not connected to a settlement or a road" << endl;
             return;
         }
-
-//        if(!firstTurn && this->_color != board.getPlace(from).getOwner() && this->_color != board.getPlace(to).getOwner()){
-//            vector<string> roads = board.getPlace(from).getRoads();
-//            bool check1 = false, check2 = false;
-//
-//            for(unsigned int i = 0; i < roads.size(); i++){
-//                if(roads[i] == this->_color) {
-//                    check1 = true;
-//                    break;
-//                }
-//            }
-//
-//            roads = board.getPlace(to).getRoads();
-//
-//            for(unsigned int i = 0; i < roads.size(); i++){
-//                if(roads[i] == this->_color) {
-//                    check2 = true;
-//                    break;
-//                }
-//            }
-//
-//            if(!check1 && !check2) {
-//                cout << "You can't put a road without it being connected to one of your settlements or roads" << endl;
-//                return;
-//            }
-//        }
 
         this->_numOfBrick--;
         this->_numOfWood--;
@@ -660,6 +635,165 @@ namespace ariel {
                 return;
             }
         }
+    }
+
+    void Player::tradeBank(string give, string get){
+        if(give == "wood"){
+            if (this->_numOfWood < 4) {
+                //throw exception("You don't have enough wood!");
+                cout << "You don't have enough wood!" << endl;
+                return;
+            }
+
+            if(get == "brick"){
+                addBrick(1);
+                subWood(4);
+            }
+
+            if(get == "sheep"){
+                addSheep(1);
+                subWood(4);
+            }
+
+            if(get == "stone"){
+                addStone(1);
+                subWood(4);
+            }
+
+            if(get == "wheat"){
+                addWheat(1);
+                subWood(4);
+            }
+
+            else
+                cout << "Not a valid get value!" << endl;
+        }
+
+        if(give == "brick"){
+            if (this->_numOfBrick < 4) {
+                //throw exception("You don't have enough wood!");
+                cout << "You don't have enough brick!" << endl;
+                return;
+            }
+
+            if(get == "wood"){
+                addWood(1);
+                subBrick(4);
+            }
+
+            if(get == "sheep"){
+                addSheep(1);
+                subBrick(4);
+            }
+
+            if(get == "stone"){
+                addStone(1);
+                subBrick(4);
+            }
+
+            if(get == "wheat"){
+                addWheat(1);
+                subBrick(4);
+            }
+
+            else
+                cout << "Not a valid get value!" << endl;
+        }
+
+        if(give == "sheep"){
+            if (this->_numOfSheep < 4) {
+                //throw exception("You don't have enough wood!");
+                cout << "You don't have enough sheep!" << endl;
+                return;
+            }
+
+            if(get == "wood"){
+                addWood(1);
+                subSheep(4);
+            }
+
+            if(get == "brick"){
+                addBrick(1);
+                subSheep(4);
+            }
+
+            if(get == "stone"){
+                addStone(1);
+                subSheep(4);
+            }
+
+            if(get == "wheat"){
+                addWheat(1);
+                subSheep(4);
+            }
+
+            else
+                cout << "Not a valid get value!" << endl;
+        }
+
+        if(give == "stone"){
+            if (this->_numOfStone < 4) {
+                //throw exception("You don't have enough wood!");
+                cout << "You don't have enough stone!" << endl;
+                return;
+            }
+
+            if(get == "wood"){
+                addWood(1);
+                subStone(4);
+            }
+
+            if(get == "brick"){
+                addBrick(1);
+                subStone(4);
+            }
+
+            if(get == "sheep"){
+                addSheep(1);
+                subStone(4);
+            }
+
+            if(get == "wheat"){
+                addWheat(1);
+                subStone(4);
+            }
+
+            else
+                cout << "Not a valid get value!" << endl;
+        }
+
+        if(give == "wheat"){
+            if (this->_numOfWheat < 4) {
+                //throw exception("You don't have enough wood!");
+                cout << "You don't have enough wheat!" << endl;
+                return;
+            }
+
+            if(get == "wood"){
+                addWood(1);
+                subWheat(4);
+            }
+
+            if(get == "brick"){
+                addBrick(1);
+                subWheat(4);
+            }
+
+            if(get == "sheep"){
+                addSheep(1);
+                subWheat(4);
+            }
+
+            if(get == "stone"){
+                addStone(1);
+                subWheat(4);
+            }
+
+            else
+                cout << "Not a valid get value!" << endl;
+        }
+        else
+            cout << "Not a valid give value!" << endl;
     }
 
     void Player::buyDevelopmentCard() {

@@ -68,7 +68,7 @@ namespace ariel {
 
         this->_places[27].add_info({types[10]}, {nums[10]}, {34, 22}, 28);
         this->_places[28].add_info({types[9], types[10], types[17]}, {nums[9], nums[10], nums[17]}, {34, 35, 23}, 29);
-        this->_places[29].add_info({types[16], types[17], "Desert"}, {nums[16], nums[17], 7}, {35, 36, 23}, 30);
+        this->_places[29].add_info({types[16], types[17], "Desert"}, {nums[16], nums[17], 7}, {35, 36, 24}, 30);
         this->_places[30].add_info({types[15], types[14], "Desert"}, {nums[15], nums[14], 7}, {36, 37, 25}, 31);
         this->_places[31].add_info({types[5], types[4], types[14]}, {nums[5], nums[4], nums[14]}, {37, 38, 26}, 32);
         this->_places[32].add_info({types[4]}, {nums[4]}, {38, 27}, 33);
