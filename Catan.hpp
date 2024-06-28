@@ -3,10 +3,18 @@
 
 #pragma once
 
-#include <iostream>
 #include <vector>
+#include <iostream>
+#include <string>
+#include <stack>
+#include <memory>
+#include <random>
+#include <chrono>
+#include <algorithm>
+
 #include "Player.hpp"
 #include "Board.hpp"
+#include "Card.hpp"
 
 using namespace std;
 
@@ -16,23 +24,26 @@ namespace ariel {
     {
         // Fields
 
-        Player& _p1;
-        Player& _p2;
-        Player& _p3;
+        Player* _p1;
+        Player* _p2;
+        Player* _p3;
         Board _GameBoard;
-        //static Point _blocker_place
+        stack<unique_ptr<Card>> _cards;
 
         public:
-                Catan(Player& p1, Player& p2, Player& p3) : _p1(p1), _p2(p2), _p3(p3), _GameBoard(Board()) {};
+                Catan(Player& p1, Player& p2, Player& p3);
                 ~Catan();
-                Player& ChooseStartingPlayer();
-                Board& getBoard();
+                Player* ChooseStartingPlayer();
+                Board* getBoard();
                 void printWinner() const;
                 bool hasWinner() const;
-                Player& endTurn();
+                void endTurn (Player &p) const;
                 void updateResources(int dice);
-                Player& getPlayer(int i) const;
+                Player* getPlayer(int i) const;
                 void firstTurn(Player &p);
-                void firstSettlements(Player &p);
+                void firstSettlements(Player &p, bool resources);
+                void addFirstResources(Player &p, unsigned int place);
+                void buyDevelopmentCard(Player &p);
+                void useDevelopmentCard(Player& p);
     };
 }

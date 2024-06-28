@@ -22,9 +22,9 @@ namespace ariel{
         int _index; // Players index in the game
         string _color;
 
-        int _points = 0; // Players number of points
+        int _points = 2; // Players number of points
         int _numOfCities = 0;
-        int _numOfSettlements = 0;
+        int _numOfSettlements = 2;
 
         int _numOfVictoryPoints = 0;
         int _numOfKnights = 0;
@@ -44,14 +44,14 @@ namespace ariel{
                 Player(string name, string color); // Constructor
                 ~Player();
 
-                void placeCity(unsigned int place_id, Board &board);
-                void placeSettlement(unsigned int place_id, Board &board);
-                void placeRoad(unsigned int from, unsigned int to, Board &board);
+                void placeCity(unsigned int place_id, Board& board);
+                void placeSettlement(unsigned int place_id, Board& board);
+                bool placeRoad(unsigned int from, unsigned int to, Board& board);
                 int rollDice(); // Maybe const
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
                 void tradeBank(string give, string get);
-                void buyDevelopmentCard();
+//                void buyDevelopmentCard();
                 void printPoints() const;
 
                 inline string getName() const {return this->_name;};
@@ -59,6 +59,8 @@ namespace ariel{
 //                inline static int getTurn() {return this->_turn;};
                 inline void setIdx(int num) {this->_index = num;};
                 inline int getIdx() const {return this->_index;};
+                inline int getNumOfSettlements() {return this->_numOfSettlements;};
+                inline int getNumOfResources() {return this->_numOfWheat + this->_numOfStone + this->_numOfSheep + this->_numOfBrick + this->_numOfWood;}
 
                 inline void addWood(int num) {this->_numOfWood += num;};
                 inline void subWood(int num) {this->_numOfWood -= num;};
@@ -83,12 +85,24 @@ namespace ariel{
 
                 inline int getPoints() const {return this->_points;};
 
-                void useCard(Board &board, string type);
+//                void useCard(Board &board, string type);
 
                 inline int getNumOfMonopoly() const {return this->_numOfMonopoly;};
                 inline int getNumOfBuild2Roads() const {return this->_numOfBuild2Roads;};
                 inline int getNumOfYearOfPlenty() const {return this->_numOfYearOfPlenty;};
                 inline int getNumOfKnights() const {return this->_numOfKnights;};
                 inline int getNumOfVictoryPoints() const {return this->_numOfVictoryPoints;};
+
+                inline void addMonopoly(int num) { this->_numOfMonopoly += num;};
+                inline void add2Roads(int num) { this->_numOfBuild2Roads += num;};
+                inline void addYearOfPlenty(int num) { this->_numOfYearOfPlenty += num;};
+                inline void addKnight(int num) { this->_numOfKnights += num;};
+                inline void addVictoryPoint(int num) { this->_numOfVictoryPoints += num; this->_points++;};
+
+                inline void subMonopoly(int num) { this->_numOfMonopoly -= num;};
+                inline void sub2Roads(int num) { this->_numOfBuild2Roads -= num;};
+                inline void subYearOfPlenty(int num) { this->_numOfYearOfPlenty -= num;};
+                inline void subKnight(int num) { this->_numOfKnights -= num;};
+                inline void subVictoryPoint(int num) { this->_numOfVictoryPoints -= num; this->_points--;};
     };
 }

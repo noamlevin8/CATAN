@@ -41,6 +41,7 @@ namespace ariel {
             bool closeTo(Place other);
             string getType(unsigned int place);
             inline unsigned int getId() const { return this->_id; };
+            inline vector<string> getAllTypes() {return this->_type;};
     };
 
 } // ariel

@@ -30,7 +30,7 @@ namespace ariel{
                ~Board();
 
                 inline void setOwner(unsigned int place, string color){ this->_places[place-1].setOwner(color); };
-                inline Place& getPlace(unsigned int i){ return _places[i-1]; };
+                inline Place* getPlace(unsigned int i){ return &_places[i-1]; };
                 string road(unsigned int from, unsigned int to, string c);
                 void printBoard();
     };

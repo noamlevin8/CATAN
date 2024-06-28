@@ -24,7 +24,7 @@ namespace ariel {
                          Place(), Place(), Place()};
 
         vector<unsigned int> nums = {5, 2, 6, 3, 8, 10, 9, 12, 11, 4, 8, 10, 9, 4, 5, 6, 3, 11};
-        vector <string> types = {"Wood", "Wood", "Wood", "Wood",
+        vector<string> types = {"Wood", "Wood", "Wood", "Wood",
                                  "Wheat", "Wheat", "Wheat", "Wheat",
                                  "Brick", "Brick", "Brick", "Brick",
                                  "Stone", "Stone", "Stone",

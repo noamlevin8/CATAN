@@ -4,7 +4,6 @@
 #pragma once
 
 #include "Player.hpp"
-#include "Catan.hpp"
 
 #include <iostream>
 #include <string>
@@ -12,14 +11,16 @@
 
 namespace ariel {
 
+    class Catan;
+
     class Card {
         string Card_Type;
 
         public:
                 Card(string type) : Card_Type(type) {};
                 virtual ~Card();
-                inline Card get_cardType() const { return this->Card_Type };
-                virtual void use_card(Player &p, Catan &c);
+                inline string get_cardType() const { return this->Card_Type; };
+                virtual void use_card(Player &p, Catan &c) = 0;
 
     };
 

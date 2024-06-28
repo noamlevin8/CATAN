@@ -4,7 +4,7 @@
 #include "Player.hpp"
 
 namespace ariel {
-    int Player::_turn = 0;
+    int Player::_turn = 1;
 
     Player::Player(string name, string color) {
         this->_name = name;
@@ -16,7 +16,7 @@ namespace ariel {
     Player::~Player() {}
 
     // need to check for 2 roads
-    void Player::placeSettlement(unsigned int place_id, Board &board) {
+    void Player::placeSettlement(unsigned int place_id, Board& board) {
 //        if (_turn != this->_index) {
 ////            throw invalid_argument("Not your turn!");
 //            cout << "Not your turn!" << endl;
@@ -35,19 +35,32 @@ namespace ariel {
             return;
         }
 
-        if(board.getPlace(place_id).getOwner() != ""){
+        if(board.getPlace(place_id)->getOwner() != ""){
             cout << "This place is not empty" << endl;
             return;
         }
 
-        vector<unsigned int> neighbors = board.getPlace(place_id).getNeighbors();
+        vector<unsigned int> neighbors = board.getPlace(place_id)->getNeighbors();
 
         for(unsigned int i = 0; i < neighbors.size(); i++){
-            if(board.getPlace(neighbors[i]).getOwner() != ""){
+            if(board.getPlace(neighbors[i])->getOwner() != ""){
                 cout << "There is a neighbor settlement" << endl;
                 return;
             }
         }
+
+        vector<string> roads = board.getPlace(place_id)->getRoads();
+        bool neighborRoad = false;
+
+        for(unsigned int i = 0; i < roads.size(); i++){
+            if(roads[i] == this->_color){ neighborRoad = true; }
+        }
+
+        if(!neighborRoad){
+            cout << "Cant place a settlement that is not connected to a road" << endl;
+            return;
+        }
+
 
         this->_numOfBrick--;
         this->_numOfWood--;
@@ -61,7 +74,7 @@ namespace ariel {
         this->_points++;
     }
 
-    void Player::placeCity(unsigned int place_id, Board &board) {
+    void Player::placeCity(unsigned int place_id, Board& board) {
 //        if (_turn != this->_index) {
 ////            throw invalid_argument("Not your turn!");
 //            cout << "Not your turn!" << endl;
@@ -80,7 +93,7 @@ namespace ariel {
             return;
         }
 
-        if(board.getPlace(place_id).getOwner() != this->_color){
+        if(board.getPlace(place_id)->getOwner() != this->_color){
             cout << "This place is not yours" << endl;
             return;
         }
@@ -96,7 +109,7 @@ namespace ariel {
         this->_points++;
     }
 
-    void Player::placeRoad(unsigned int from, unsigned int to, Board &board) {
+    bool Player::placeRoad(unsigned int from, unsigned int to, Board& board) {
 //        if (_turn != this->_index){
 ////            throw invalid_argument("Not your turn!");
 //            cout << "Not your turn!" << endl;
@@ -106,28 +119,28 @@ namespace ariel {
         if (this->_numOfBrick < 1 || this->_numOfWood < 1) {
 //            throw invalid_argument("You don't have 1 Brick and 1 Wood!");
             cout << "You don't have 1 Brick and 1 Wood!" << endl;
-            return;
+            return false;
         }
 
         //Check for valid place
         if(from < 1 || from > 54 || to < 1 || to > 54){
             cout << "Not a valid place for a road" << endl;
-            return;
+            return false;
         }
 
-        if(!board.getPlace(from).closeTo(board.getPlace(to))){
+        if(!board.getPlace(from)->closeTo(*board.getPlace(to)) && !board.getPlace(to)->closeTo(*board.getPlace(from))){
             cout << "There is no road from " << from << " to " << to << endl;
-            return;
+            return false;
         }
 
-        vector<string> roads = board.getPlace(from).getRoads();
+        vector<string> roads = board.getPlace(from)->getRoads();
         bool neighborRoad = false;
 
         for(unsigned int i = 0; i < roads.size(); i++){
             if(roads[i] == this->_color){ neighborRoad = true; }
         }
 
-        roads = board.getPlace(to).getRoads();
+        roads = board.getPlace(to)->getRoads();
 
         for(unsigned int i = 0; i < roads.size(); i++){
             if(roads[i] == this->_color){ neighborRoad = true; }
@@ -135,58 +148,61 @@ namespace ariel {
 
         if(!neighborRoad){
             cout << "Cant place a road that is not connected to a settlement or a road" << endl;
-            return;
+            return false;
         }
-
-        this->_numOfBrick--;
-        this->_numOfWood--;
 
         //Place the road
-        if(this->_color == board.getPlace(from).getOwner() || this->_color == board.getPlace(to).getOwner()){
-            vector<unsigned int> neighbors = board.getPlace(from).getNeighbors();
+        if(this->_color == board.getPlace(from)->getOwner() || this->_color == board.getPlace(to)->getOwner()){
+            vector<unsigned int> neighbors = board.getPlace(from)->getNeighbors();
 
             for(unsigned int i = 0; i < neighbors.size(); i++){
                 if(board.getPlace(neighbors[i]) == board.getPlace(to)){
-                    if(board.getPlace(from).getRoadOwner(i) == ""){
-                        board.getPlace(from).setRoadOwner(this->_color, i);
+                    if(board.getPlace(from)->getRoadOwner(i) == ""){
+                        board.getPlace(from)->setRoadOwner(this->_color, i);
 
-                        vector<unsigned int> neighbors2 = board.getPlace(to).getNeighbors();
+                        vector<unsigned int> neighbors2 = board.getPlace(to)->getNeighbors();
                         for(unsigned int i = 0; i < neighbors2.size(); i++){
                             if(board.getPlace(neighbors2[i]) == board.getPlace(from)){
-                                board.getPlace(to).setRoadOwner(this->_color, i);
+                                board.getPlace(to)->setRoadOwner(this->_color, i);
                             }
                         }
 
-                        return;
+                        this->_numOfBrick--;
+                        this->_numOfWood--;
+                        return true;
                     }
                     cout << "The road is already occupied" << endl;
-                    return;
+                    return false;
                 }
             }
         }
 
-        if((board.getPlace(from).getOwner() == "" || this->_color != board.getPlace(from).getOwner().replace(2, 2, "0;"))
-           && (board.getPlace(to).getOwner() == "" || this->_color != board.getPlace(to).getOwner().replace(2, 2, "0;"))){
-            vector<unsigned int> neighbors = board.getPlace(from).getNeighbors();
+        if((board.getPlace(from)->getOwner() == "" || this->_color != board.getPlace(from)->getOwner().replace(2, 2, "0;"))
+           && (board.getPlace(to)->getOwner() == "" || this->_color != board.getPlace(to)->getOwner().replace(2, 2, "0;"))){
+            vector<unsigned int> neighbors = board.getPlace(from)->getNeighbors();
 
             for(unsigned int i = 0; i < neighbors.size(); i++){
                 if(board.getPlace(neighbors[i]) == board.getPlace(to)){
-                    if(board.getPlace(from).getRoadOwner(i) == ""){
-                        board.getPlace(from).setRoadOwner(this->_color, i);
+                    if(board.getPlace(from)->getRoadOwner(i) == ""){
+                        board.getPlace(from)->setRoadOwner(this->_color, i);
 
-                        vector<unsigned int> neighbors2 = board.getPlace(to).getNeighbors();
+                        vector<unsigned int> neighbors2 = board.getPlace(to)->getNeighbors();
                         for(unsigned int i = 0; i < neighbors2.size(); i++){
                             if(board.getPlace(neighbors2[i]) == board.getPlace(from)){
-                                board.getPlace(to).setRoadOwner(this->_color, i);
+                                board.getPlace(to)->setRoadOwner(this->_color, i);
                             }
                         }
-                        return;
+
+                        this->_numOfBrick--;
+                        this->_numOfWood--;
+                        return true;
                     }
                     cout << "The road is already occupied" << endl;
-                    return;
+                    return false;
                 }
             }
         }
+        return false;
     }
 
     int Player::rollDice() {
@@ -209,8 +225,8 @@ namespace ariel {
     }
 
     void Player::trade(Player &p2, string give, string get, int give_num, int get_num) {
-        if (_turn != this->_index)
-            throw invalid_argument("Not your turn!");
+//        if (_turn != this->_index)
+//            throw invalid_argument("Not your turn!");
 
         if (give == "wood") {
             if (this->_numOfWood < give_num) {
@@ -796,21 +812,21 @@ namespace ariel {
             cout << "Not a valid give value!" << endl;
     }
 
-    void Player::buyDevelopmentCard() {
-//        if (_turn != this->_index)
-//            throw invalid_argument("Not your turn!");
-
-        if (this->_numOfSheep < 1 || this->_numOfWheat < 1 || this->_numOfStone < 1) {
-            //throw exception("You don't have enough resources!");
-            cout << "You don't have enough resources!" << endl;
-            return;
-        }
-
-        // Buy card
-        this->_numOfSheep--;
-        this->_numOfWheat--;
-        this->_numOfStone--;
-    }
+//    void Player::buyDevelopmentCard() {
+////        if (_turn != this->_index)
+////            throw invalid_argument("Not your turn!");
+//
+//        if (this->_numOfSheep < 1 || this->_numOfWheat < 1 || this->_numOfStone < 1) {
+//            //throw exception("You don't have enough resources!");
+//            cout << "You don't have enough resources!" << endl;
+//            return;
+//        }
+//
+//        // Buy card
+//        this->_numOfSheep--;
+//        this->_numOfWheat--;
+//        this->_numOfStone--;
+//    }
 
     void Player::printPoints() const {
         cout << this->_name << " has " << this->_points;
@@ -822,7 +838,7 @@ namespace ariel {
         cout << this->_numOfVictoryPoints << " victory points" << endl;
     }
 
-    void useCard(Board &board, string type){
-
-    }
+//    void useCard(Board &board, string type){
+//
+//    }
 }

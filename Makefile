@@ -2,8 +2,8 @@
 # MAIL: noamlevin11@gmail.com
 
 CXX = clang++
-CXXFLAGS = -std=c++11 -Wsign-conversion -g
-CATANOBJ = Catan.o Player.o Board.o Game.o Place.o $(addprefix cards/, $(CARDSOBJ))
+CXXFLAGS = -std=c++14 -Wsign-conversion -g
+CATANOBJ = Catan.o Player.o Board.o Game.o Place.o Card.o $(addprefix cards/, $(CARDSOBJ))
 #CARDSOBJ = MonopolyCard.o RoadBuildingCard.o YearOfPlentyCard.o KnightCard.o VictoryPointCard.o
 #TESTOBJ = Test.o TestCounter.o $(filter-out main.o, $(CATANOBJ))
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
@@ -27,6 +27,9 @@ Place.o : Place.cpp Place.hpp
 
 Game.o: Game.cpp
 	$(CXX) $(CXXFLAGS) -c Game.cpp
+
+Card.o : Card.cpp Card.hpp
+	$(CXX) $(CXXFLAGS) -c Card.cpp
 
 Catan: $(CATANOBJ)
 	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
