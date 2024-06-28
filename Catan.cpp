@@ -15,14 +15,11 @@ namespace ariel {
         this->_GameBoard = Board();
         vector<unique_ptr<Card>> cards;
 
-        cards.push_back(make_unique<Monopoly>());
-        cards.push_back(make_unique<Monopoly>());
-
-        cards.push_back(make_unique<Build2Roads>());
-        cards.push_back(make_unique<Build2Roads>());
-
-        cards.push_back(make_unique<YearOfPlenty>());
-        cards.push_back(make_unique<YearOfPlenty>());
+        for(int i = 0; i < 10; i++) {
+            cards.push_back(make_unique<Monopoly>());
+            cards.push_back(make_unique<Build2Roads>());
+            cards.push_back(make_unique<YearOfPlenty>());
+        }
 
         cards.push_back(make_unique<Knight>());
         cards.push_back(make_unique<Knight>());
@@ -106,28 +103,26 @@ namespace ariel {
         return false;
     }
 
-    void Catan::endTurn(Player &p) const {
+    Player* Catan::endTurn() const {
         cout << "Names: " << this->_p1->getName() << ", p2 - " << this->_p2->getName() << ", p3 - " << this->_p3->getName() << endl;
         cout << "Index: p1 - " << this->_p1->getIdx() << ", p2 - " << this->_p2->getIdx() << ", p3 - " << this->_p3->getIdx() << endl;
-        cout << "P before - " << p.getName() << endl;
+//        cout << "P before - " << p.getName() << endl;
         Player::endTurn();
         int turn = Player::_turn;
         cout << "Turn - " << turn << endl;
 
         if (this->_p1->getIdx() == turn) {
             cout << this->_p1->getName() << "'s turn!" << endl;
-            p = *this->_p1;
+            return this->_p1;
         } else if (this->_p2->getIdx() == turn) {
             cout << this->_p2->getName() << "'s turn!" << endl;
-            p = *this->_p2;
-        } else if (this->_p3->getIdx() == turn) {
-            cout << this->_p3->getName() << "'s turn!" << endl;
-            p = *this->_p3;
+            return this->_p2;
         } else {
-            cout << "Problem" << endl;
+            cout << this->_p3->getName() << "'s turn!" << endl;
+            return this->_p3;
         }
 
-        cout << "P after - " << p.getName() << endl;
+//        cout << "P after - " << p.getName() << endl;
     }
 
     void Catan::updateResources(int dice) {
@@ -333,6 +328,7 @@ namespace ariel {
                 }
             }
         } else {
+            string c;
             for (unsigned int i = 1; i < 55; i++) {
                 if (i == 7)
                     continue;
@@ -340,28 +336,49 @@ namespace ariel {
                 string typeWithNum = this->_GameBoard.getPlace(i)->diceInPlace(dice);
 
                 if (typeWithNum != "0") {
+                    c = this->_p1->getColor();
                     if (this->_GameBoard.getPlace(i)->getOwner() == this->_p1->getColor()) {
                         if (typeWithNum == "Wood") { this->_p1->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p1->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p1->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p1->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p1->addWheat(1); }
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                        if (typeWithNum == "Wood") { this->_p3->addWood(2); }
+                        if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
+                        if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
+                        if (typeWithNum == "Stone") { this->_p3->addStone(2); }
+                        if (typeWithNum == "Wheat") { this->_p3->addWheat(2); }
                     }
 
+                    c = this->_p2->getColor();
                     if (this->_GameBoard.getPlace(i)->getOwner() == this->_p2->getColor()) {
                         if (typeWithNum == "Wood") { this->_p2->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p2->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p2->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p2->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p2->addWheat(1); }
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                        if (typeWithNum == "Wood") { this->_p3->addWood(2); }
+                        if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
+                        if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
+                        if (typeWithNum == "Stone") { this->_p3->addStone(2); }
+                        if (typeWithNum == "Wheat") { this->_p3->addWheat(2); }
                     }
 
+                    c = this->_p3->getColor();
                     if (this->_GameBoard.getPlace(i)->getOwner() == this->_p3->getColor()) {
                         if (typeWithNum == "Wood") { this->_p3->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p3->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p3->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p3->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p3->addWheat(1); }
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                        if (typeWithNum == "Wood") { this->_p3->addWood(2); }
+                        if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
+                        if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
+                        if (typeWithNum == "Stone") { this->_p3->addStone(2); }
+                        if (typeWithNum == "Wheat") { this->_p3->addWheat(2); }
                     }
                 }
             }

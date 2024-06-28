@@ -102,7 +102,8 @@ namespace ariel {
         this->_numOfWheat -= 2;
 
         //Place the city
-        board.setOwner(place_id, this->_color.replace(2, 2, "1;"));
+        string c = this->_color;
+        board.setOwner(place_id, c.replace(2, 2, "1;"));
 
         this->_numOfCities++;
         this->_numOfSettlements--;

@@ -66,7 +66,7 @@ int main() {
     unsigned int from, to, place;
     string name, get, give;
     int getNum, giveNum;
-    Player pForTrade = *player;
+    Player* pForTrade = player; // check
 
     // While we don't have a winner we keep playing
     while (!catan.hasWinner()) {
@@ -90,6 +90,8 @@ int main() {
             cout << "Year of Plenty: " << player->getNumOfYearOfPlenty() << endl;
             cout << "Knight: " << player->getNumOfKnights() << endl;
             cout << "Victory Point: " << player->getNumOfVictoryPoints() << endl;
+            cout << "------------------------------" << endl;
+            cout << "Points: " << player->getPoints() << endl;
             cout << "==============================" << endl;
             cout << "Choose your move:" << endl;
             cout << "1 - Build road" << endl;
@@ -153,13 +155,13 @@ int main() {
                     }
 
                     if(catan.getPlayer(1)->getName() == name)
-                        pForTrade = *catan.getPlayer(1);
+                        pForTrade = catan.getPlayer(1);
 
                     else if(catan.getPlayer(2)->getName() == name)
-                        pForTrade = *catan.getPlayer(2);
+                        pForTrade = catan.getPlayer(2);
 
                     else if(catan.getPlayer(3)->getName() == name)
-                        pForTrade = *catan.getPlayer(3);
+                        pForTrade = catan.getPlayer(3);
 
                     else{
                         cout << "Not a valid name!" << endl;
@@ -182,10 +184,10 @@ int main() {
                     cout << "How many: " << endl;
                     cin >> giveNum;
 
-                    cout << "Player's name - " << player->getName() << ", Trader name - " << pForTrade.getName() << endl;
+                    cout << "Player's name - " << player->getName() << ", Trader name - " << pForTrade->getName() << endl;
 
-                    if(player->getName() != pForTrade.getName())
-                        player->trade(pForTrade, give, get, giveNum, getNum);
+                    if(player->getName() != pForTrade->getName())
+                        player->trade(*pForTrade, give, get, giveNum, getNum);
                     else
                         cout << "The same" << endl;
                     break;
@@ -209,7 +211,7 @@ int main() {
                     catan.useDevelopmentCard(*player);
                     break;
                 case 8:
-                    catan.endTurn(*player);
+                    player = catan.endTurn();
                     break;
                 case 0:
                     cout << "Exiting game." << endl;

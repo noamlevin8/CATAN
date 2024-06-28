@@ -37,7 +37,7 @@ namespace ariel {
                 Board* getBoard();
                 void printWinner() const;
                 bool hasWinner() const;
-                void endTurn (Player &p) const;
+                Player* endTurn () const;
                 void updateResources(int dice);
                 Player* getPlayer(int i) const;
                 void firstTurn(Player &p);
