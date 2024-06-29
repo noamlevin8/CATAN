@@ -6,8 +6,6 @@
 #define FALSE 0
 #define TRUE 1
 
-const std::string RESET = "\033[0m";
-
 namespace ariel {
     Place::Place(){}
     Place::~Place(){}
@@ -21,6 +19,7 @@ namespace ariel {
         this->_roads = empty_roads;
     }
 
+    // Getting the type of the dice result
     string Place::diceInPlace(int result){
         for(unsigned int i = 0; i < this->_num.size(); i++){
             if(this->_num[i] == result){ return this->_type[i]; }
@@ -34,16 +33,18 @@ namespace ariel {
         os << p.getOwner() << "("<<to_string(p.getId())<<")" << RESET << spaces;
         return os;
     }
+
+    // Checking if another place is close to us on the map
     bool Place::closeTo(Place other){
         for(unsigned int i = 0; i< this->_neighbors.size(); i++){
             if(other.getId() == this->_neighbors[i]){ return true; }
         }
         return false;
     }
+
     string Place::getType(unsigned int place){
         string spaces = ",";
         if(this->_num[place] < 10){ spaces = ", "; }
         return this->_type[place] + spaces + to_string(this->_num[place]);
     };
-
-} // ariel
+}

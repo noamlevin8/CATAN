@@ -15,16 +15,19 @@ namespace ariel {
         this->_GameBoard = Board();
         vector<unique_ptr<Card>> cards;
 
+        // 10 From these
         for(int i = 0; i < 10; i++) {
             cards.push_back(make_unique<Monopoly>());
             cards.push_back(make_unique<Build2Roads>());
             cards.push_back(make_unique<YearOfPlenty>());
         }
 
+        // 3 Knights
         cards.push_back(make_unique<Knight>());
         cards.push_back(make_unique<Knight>());
         cards.push_back(make_unique<Knight>());
 
+        // 4 Victory Points
         cards.push_back(make_unique<VictoryPoint>());
         cards.push_back(make_unique<VictoryPoint>());
         cards.push_back(make_unique<VictoryPoint>());
@@ -40,6 +43,7 @@ namespace ariel {
         }
     }
 
+    // For the demo and tests (without shuffling)
     Catan::Catan(Player& p1, Player& p2, Player& p3, bool test){
         this->_p1 = &p1;
         this->_p2 = &p2;
@@ -101,6 +105,7 @@ namespace ariel {
         }
     }
 
+    // For the demo and tests (regular order)
     Player* Catan::ChooseStartingPlayer(bool test){
         this->_p1->setIdx(1);
         this->_p2->setIdx(2);
@@ -137,12 +142,8 @@ namespace ariel {
     }
 
     Player* Catan::endTurn() const {
-        cout << "Names: " << this->_p1->getName() << ", p2 - " << this->_p2->getName() << ", p3 - " << this->_p3->getName() << endl;
-        cout << "Index: p1 - " << this->_p1->getIdx() << ", p2 - " << this->_p2->getIdx() << ", p3 - " << this->_p3->getIdx() << endl;
-//        cout << "P before - " << p.getName() << endl;
         Player::endTurn();
         int turn = Player::_turn;
-        cout << "Turn - " << turn << endl;
 
         if (this->_p1->getIdx() == turn) {
             cout << this->_p1->getName() << "'s turn!" << endl;
@@ -154,16 +155,11 @@ namespace ariel {
             cout << this->_p3->getName() << "'s turn!" << endl;
             return this->_p3;
         }
-
-//        cout << "P after - " << p.getName() << endl;
     }
 
     void Catan::updateResources(int dice) {
         // 7 case
         if (dice == 7) {
-
-            cout << "Names - " << this->_p1->getName() << ", " << this->_p2->getName() << ", " << this->_p3->getName() << endl;
-
             int n, count = 0;
             if (this->_p1->getNumOfResources() > 7) {
                 n = this->_p1->getNumOfResources() / 2;
@@ -370,13 +366,13 @@ namespace ariel {
 
                 if (typeWithNum != "0") {
                     c = this->_p1->getColor();
-                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p1->getColor()) {
+                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p1->getColor()) { // Regular settlement
                         if (typeWithNum == "Wood") { this->_p1->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p1->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p1->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p1->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p1->addWheat(1); }
-                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){ // City
                         if (typeWithNum == "Wood") { this->_p1->addWood(2); }
                         if (typeWithNum == "Brick") { this->_p1->addBrick(2); }
                         if (typeWithNum == "Sheep") { this->_p1->addSheep(2); }
@@ -385,13 +381,13 @@ namespace ariel {
                     }
 
                     c = this->_p2->getColor();
-                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p2->getColor()) {
+                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p2->getColor()) { // Regular settlement
                         if (typeWithNum == "Wood") { this->_p2->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p2->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p2->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p2->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p2->addWheat(1); }
-                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){ // City
                         if (typeWithNum == "Wood") { this->_p2->addWood(2); }
                         if (typeWithNum == "Brick") { this->_p2->addBrick(2); }
                         if (typeWithNum == "Sheep") { this->_p2->addSheep(2); }
@@ -400,13 +396,13 @@ namespace ariel {
                     }
 
                     c = this->_p3->getColor();
-                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p3->getColor()) {
+                    if (this->_GameBoard.getPlace(i)->getOwner() == this->_p3->getColor()) { // Regular settlement
                         if (typeWithNum == "Wood") { this->_p3->addWood(1); }
                         if (typeWithNum == "Brick") { this->_p3->addBrick(1); }
                         if (typeWithNum == "Sheep") { this->_p3->addSheep(1); }
                         if (typeWithNum == "Stone") { this->_p3->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p3->addWheat(1); }
-                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
+                    } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){ // City
                         if (typeWithNum == "Wood") { this->_p3->addWood(2); }
                         if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
                         if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
@@ -423,13 +419,11 @@ namespace ariel {
             return this->_p1;
         if (i == 2)
             return this->_p2;
-//        if(i == 3)
-        return this->_p3;
 
-//        cout << "Not a valid number!" << endl;
-//        return NULL;
+        return this->_p3;
     }
 
+    // The first turn in the currect order
     void Catan::firstTurn(Player &p) {
         if (p.getIdx() == this->_p1->getIdx()) {
             firstSettlements(*this->_p1, false);
@@ -457,6 +451,7 @@ namespace ariel {
 
     }
 
+    // First turn's settlement assignments with a bool type for knowing if to give resources or not
     void Catan::firstSettlements(Player &p, bool resources) {
         bool valid_place = false, check_nei = true;
         unsigned int place;
@@ -525,10 +520,9 @@ namespace ariel {
                 this->_GameBoard.getPlace(place)->setRoadOwner(p.getColor(), i);
             }
         }
-
-//        this->_GameBoard.printBoard();
     }
 
+    // Adding resources for the first turn
     void Catan::addFirstResources(Player &p, unsigned int place) {
         vector <string> types = this->_GameBoard.getPlace(place)->getAllTypes();
 

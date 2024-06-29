@@ -37,31 +37,6 @@ int main() {
     catan.getBoard()->printBoard(); // The start of the game
     cout << player->getName() << "'s turn!" << endl;
 
-//    cout << "==============================" << endl;
-//    cout << catan.getPlayer(1).getName() << ", your resources: " << endl;
-//    cout << "Wood: " << catan.getPlayer(1).getNumOfWood() << endl;
-//    cout << "Brick: " << catan.getPlayer(1).getNumOfBrick() << endl;
-//    cout << "Sheep: " << catan.getPlayer(1).getNumOfSheep() << endl;
-//    cout << "Stone: " << catan.getPlayer(1).getNumOfStone() << endl;
-//    cout << "Wheat: " << catan.getPlayer(1).getNumOfWheat() << endl;
-//    cout << "------------------------------" << endl;
-//    cout << catan.getPlayer(2).getName() << ", your resources: " << endl;
-//    cout << "Wood: " << catan.getPlayer(2).getNumOfWood() << endl;
-//    cout << "Brick: " << catan.getPlayer(2).getNumOfBrick() << endl;
-//    cout << "Sheep: " << catan.getPlayer(2).getNumOfSheep() << endl;
-//    cout << "Stone: " << catan.getPlayer(2).getNumOfStone() << endl;
-//    cout << "Wheat: " << catan.getPlayer(2).getNumOfWheat() << endl;
-//    cout << "------------------------------" << endl;
-//    cout << catan.getPlayer(3).getName() << ", your resources: " << endl;
-//    cout << "Wood: " << catan.getPlayer(3).getNumOfWood() << endl;
-//    cout << "Brick: " << catan.getPlayer(3).getNumOfBrick() << endl;
-//    cout << "Sheep: " << catan.getPlayer(3).getNumOfSheep() << endl;
-//    cout << "Stone: " << catan.getPlayer(3).getNumOfStone() << endl;
-//    cout << "Wheat: " << catan.getPlayer(3).getNumOfWheat() << endl;
-//    cout << "------------------------------" << endl;
-
-
-
     int dice, menu;
     unsigned int from, to, place;
     string name, get, give;

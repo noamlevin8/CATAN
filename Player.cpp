@@ -17,14 +17,7 @@ namespace ariel {
 
     // need to check for 2 roads
     void Player::placeSettlement(unsigned int place_id, Board& board) {
-//        if (_turn != this->_index) {
-////            throw invalid_argument("Not your turn!");
-//            cout << "Not your turn!" << endl;
-//            return;
-//        }
-
         if (this->_numOfBrick < 1 || this->_numOfWood < 1 || this->_numOfSheep < 1 || this->_numOfWheat < 1) {
-//            throw invalid_argument("You don't have enough resources!");
             cout << "You don't have enough resources!" << endl;
             return;
         }
@@ -41,7 +34,6 @@ namespace ariel {
         }
 
         vector<unsigned int> neighbors = board.getPlace(place_id)->getNeighbors();
-
         for(unsigned int i = 0; i < neighbors.size(); i++){
             if(board.getPlace(neighbors[i])->getOwner() != ""){
                 cout << "There is a neighbor settlement" << endl;
@@ -61,7 +53,6 @@ namespace ariel {
             return;
         }
 
-
         this->_numOfBrick--;
         this->_numOfWood--;
         this->_numOfSheep--;
@@ -75,14 +66,7 @@ namespace ariel {
     }
 
     void Player::placeCity(unsigned int place_id, Board& board) {
-//        if (_turn != this->_index) {
-////            throw invalid_argument("Not your turn!");
-//            cout << "Not your turn!" << endl;
-//            return;
-//        }
-
         if (this->_numOfStone < 3 || this->_numOfWheat < 2) {
-//            throw invalid_argument("You don't have enough resources!");
             cout << "You don't have enough resources!" << endl;
             return;
         }
@@ -111,14 +95,7 @@ namespace ariel {
     }
 
     bool Player::placeRoad(unsigned int from, unsigned int to, Board& board) {
-//        if (_turn != this->_index){
-////            throw invalid_argument("Not your turn!");
-//            cout << "Not your turn!" << endl;
-//            return;
-//        }
-
         if (this->_numOfBrick < 1 || this->_numOfWood < 1) {
-//            throw invalid_argument("You don't have 1 Brick and 1 Wood!");
             cout << "You don't have 1 Brick and 1 Wood!" << endl;
             return false;
         }
@@ -207,9 +184,6 @@ namespace ariel {
     }
 
     int Player::rollDice() {
-//        if (_turn != this->_index)
-//            throw invalid_argument("Not your turn!");
-
         // Create a random device and seed the random number generator
         random_device rd;
         mt19937 gen(rd());
@@ -226,19 +200,14 @@ namespace ariel {
     }
 
     void Player::trade(Player &p2, string give, string get, int give_num, int get_num) {
-//        if (_turn != this->_index)
-//            throw invalid_argument("Not your turn!");
-
         if (give == "wood") {
             if (this->_numOfWood < give_num) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough wood!" << endl;
                 return;
             }
 
             if (get == "wood") {
                 if (p2.getNumOfWood() < get_num) {
-                    //throw exception("You don't have enough wood!");
                     cout << "P2 don't have enough wood!" << endl;
                     return;
                 }
@@ -253,7 +222,6 @@ namespace ariel {
             }
             if (get == "brick") {
                 if (p2.getNumOfBrick() < get_num) {
-                    //throw exception("P2 don't have enough brick!");
                     cout << "P2 don't have enough brick!" << endl;
                     return;
                 }
@@ -268,7 +236,6 @@ namespace ariel {
             }
             if (get == "sheep") {
                 if (p2.getNumOfSheep() < get_num) {
-                    //throw exception("P2 don't have enough sheep!");
                     cout << "P2 don't have enough sheep!" << endl;
                     return;
                 }
@@ -283,7 +250,6 @@ namespace ariel {
             }
             if (get == "stone") {
                 if (p2.getNumOfStone() < get_num) {
-                    //throw exception("P2 don't have enough stone!");
                     cout << "P2 don't have enough stone!" << endl;
                     return;
                 }
@@ -298,7 +264,6 @@ namespace ariel {
             }
             if (get == "wheat") {
                 if (p2.getNumOfWheat() < get_num) {
-                    //throw exception("P2 don't have enough wheat!");
                     cout << "P2 don't have enough wheat!" << endl;
                     return;
                 }
@@ -316,14 +281,12 @@ namespace ariel {
 
         if (give == "brick") {
             if (this->_numOfBrick < give_num) {
-                //throw exception("You don't have enough brick!");
                 cout << "You don't have enough brick!" << endl;
                 return;
             }
 
             if (get == "wood") {
                 if (p2.getNumOfWood() < get_num) {
-                    //throw exception("You don't have enough wood!");
                     cout << "P2 don't have enough wood!" << endl;
                     return;
                 }
@@ -338,7 +301,6 @@ namespace ariel {
             }
             if (get == "brick") {
                 if (p2.getNumOfBrick() < get_num) {
-                    //throw exception("P2 don't have enough brick!");
                     cout << "P2 don't have enough brick!" << endl;
                     return;
                 }
@@ -353,7 +315,6 @@ namespace ariel {
             }
             if (get == "sheep") {
                 if (p2.getNumOfSheep() < get_num) {
-                    //throw exception("P2 don't have enough sheep!");
                     cout << "P2 don't have enough sheep!" << endl;
                     return;
                 }
@@ -368,7 +329,6 @@ namespace ariel {
             }
             if (get == "stone") {
                 if (p2.getNumOfStone() < get_num) {
-                    //throw exception("P2 don't have enough stone!");
                     cout << "P2 don't have enough stone!" << endl;
                     return;
                 }
@@ -383,7 +343,6 @@ namespace ariel {
             }
             if (get == "wheat") {
                 if (p2.getNumOfWheat() < get_num) {
-                    //throw exception("P2 don't have enough wheat!");
                     cout << "P2 don't have enough wheat!" << endl;
                     return;
                 }
@@ -401,14 +360,12 @@ namespace ariel {
 
         if (give == "sheep") {
             if (this->_numOfSheep < give_num) {
-                //throw exception("You don't have enough sheep!");
                 cout << "You don't have enough sheep!" << endl;
                 return;
             }
 
             if (get == "wood") {
                 if (p2.getNumOfWood() < get_num) {
-                    //throw exception("You don't have enough wood!");
                     cout << "P2 don't have enough wood!" << endl;
                     return;
                 }
@@ -423,7 +380,6 @@ namespace ariel {
             }
             if (get == "brick") {
                 if (p2.getNumOfBrick() < get_num) {
-                    //throw exception("P2 don't have enough brick!");
                     cout << "P2 don't have enough brick!" << endl;
                     return;
                 }
@@ -438,7 +394,6 @@ namespace ariel {
             }
             if (get == "sheep") {
                 if (p2.getNumOfSheep() < get_num) {
-                    //throw exception("P2 don't have enough sheep!");
                     cout << "P2 don't have enough sheep!" << endl;
                     return;
                 }
@@ -453,7 +408,6 @@ namespace ariel {
             }
             if (get == "stone") {
                 if (p2.getNumOfStone() < get_num) {
-                    //throw exception("P2 don't have enough stone!");
                     cout << "P2 don't have enough stone!" << endl;
                     return;
                 }
@@ -468,7 +422,6 @@ namespace ariel {
             }
             if (get == "wheat") {
                 if (p2.getNumOfWheat() < get_num) {
-                    //throw exception("P2 don't have enough wheat!");
                     cout << "P2 don't have enough wheat!" << endl;
                     return;
                 }
@@ -486,14 +439,12 @@ namespace ariel {
 
         if (give == "stone") {
             if (this->_numOfStone < give_num) {
-                //throw exception("You don't have enough stone!");
                 cout << "You don't have enough stone!" << endl;
                 return;
             }
 
             if (get == "wood") {
                 if (p2.getNumOfWood() < get_num) {
-                    //throw exception("You don't have enough wood!");
                     cout << "P2 don't have enough wood!" << endl;
                     return;
                 }
@@ -508,7 +459,6 @@ namespace ariel {
             }
             if (get == "brick") {
                 if (p2.getNumOfBrick() < get_num) {
-                    //throw exception("P2 don't have enough brick!");
                     cout << "P2 don't have enough brick!" << endl;
                     return;
                 }
@@ -523,7 +473,6 @@ namespace ariel {
             }
             if (get == "sheep") {
                 if (p2.getNumOfSheep() < get_num) {
-                    //throw exception("P2 don't have enough sheep!");
                     cout << "P2 don't have enough sheep!" << endl;
                     return;
                 }
@@ -538,7 +487,6 @@ namespace ariel {
             }
             if (get == "stone") {
                 if (p2.getNumOfStone() < get_num) {
-                    //throw exception("P2 don't have enough stone!");
                     cout << "P2 don't have enough stone!" << endl;
                     return;
                 }
@@ -553,7 +501,6 @@ namespace ariel {
             }
             if (get == "wheat") {
                 if (p2.getNumOfWheat() < get_num) {
-                    //throw exception("P2 don't have enough wheat!");
                     cout << "P2 don't have enough wheat!" << endl;
                     return;
                 }
@@ -571,14 +518,12 @@ namespace ariel {
 
         if (give == "wheat") {
             if (this->_numOfWheat < give_num) {
-                //throw exception("You don't have enough wheat!");
                 cout << "You don't have enough wheat!" << endl;
                 return;
             }
 
             if (get == "wood") {
                 if (p2.getNumOfWood() < get_num) {
-                    //throw exception("You don't have enough wood!");
                     cout << "P2 don't have enough wood!" << endl;
                     return;
                 }
@@ -593,7 +538,6 @@ namespace ariel {
             }
             if (get == "brick") {
                 if (p2.getNumOfBrick() < get_num) {
-                    //throw exception("P2 don't have enough brick!");
                     cout << "P2 don't have enough brick!" << endl;
                     return;
                 }
@@ -608,7 +552,6 @@ namespace ariel {
             }
             if (get == "sheep") {
                 if (p2.getNumOfSheep() < get_num) {
-                    //throw exception("P2 don't have enough sheep!");
                     cout << "P2 don't have enough sheep!" << endl;
                     return;
                 }
@@ -623,7 +566,6 @@ namespace ariel {
             }
             if (get == "stone") {
                 if (p2.getNumOfStone() < get_num) {
-                    //throw exception("P2 don't have enough stone!");
                     cout << "P2 don't have enough stone!" << endl;
                     return;
                 }
@@ -638,7 +580,6 @@ namespace ariel {
             }
             if (get == "wheat") {
                 if (p2.getNumOfWheat() < get_num) {
-                    //throw exception("P2 don't have enough wheat!");
                     cout << "P2 don't have enough wheat!" << endl;
                     return;
                 }
@@ -657,7 +598,6 @@ namespace ariel {
     void Player::tradeBank(string give, string get){
         if(give == "wood"){
             if (this->_numOfWood < 4) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough wood!" << endl;
                 return;
             }
@@ -678,7 +618,6 @@ namespace ariel {
                 cout << "Not a valid get value!" << endl;
         } else if(give == "brick"){
             if (this->_numOfBrick < 4) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough brick!" << endl;
                 return;
             }
@@ -699,7 +638,6 @@ namespace ariel {
                 cout << "Not a valid get value!" << endl;
         } else if(give == "sheep"){
             if (this->_numOfSheep < 4) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough sheep!" << endl;
                 return;
             }
@@ -720,7 +658,6 @@ namespace ariel {
                 cout << "Not a valid get value!" << endl;
         } else if(give == "stone"){
             if (this->_numOfStone < 4) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough stone!" << endl;
                 return;
             }
@@ -741,7 +678,6 @@ namespace ariel {
                 cout << "Not a valid get value!" << endl;
         } else if(give == "wheat"){
             if (this->_numOfWheat < 4) {
-                //throw exception("You don't have enough wood!");
                 cout << "You don't have enough wheat!" << endl;
                 return;
             }
@@ -764,22 +700,6 @@ namespace ariel {
             cout << "Not a valid give value!" << endl;
     }
 
-//    void Player::buyDevelopmentCard() {
-////        if (_turn != this->_index)
-////            throw invalid_argument("Not your turn!");
-//
-//        if (this->_numOfSheep < 1 || this->_numOfWheat < 1 || this->_numOfStone < 1) {
-//            //throw exception("You don't have enough resources!");
-//            cout << "You don't have enough resources!" << endl;
-//            return;
-//        }
-//
-//        // Buy card
-//        this->_numOfSheep--;
-//        this->_numOfWheat--;
-//        this->_numOfStone--;
-//    }
-
     void Player::printPoints() const {
         cout << this->_name << " has " << this->_points;
         cout << " points because he/she has: " << endl;
@@ -789,8 +709,4 @@ namespace ariel {
             cout << "2 points from the largest army card" << endl;
         cout << this->_numOfVictoryPoints << " victory points" << endl;
     }
-
-//    void useCard(Board &board, string type){
-//
-//    }
 }

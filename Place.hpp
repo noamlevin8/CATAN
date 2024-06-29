@@ -43,5 +43,4 @@ namespace ariel {
             inline unsigned int getId() const { return this->_id; };
             inline vector<string> getAllTypes() {return this->_type;};
     };
-
-} // ariel
+}

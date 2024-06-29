@@ -8,8 +8,8 @@
 #include <vector>
 #include <iostream>
 #include <string>
-#include <algorithm> // For std::shuffle
-#include <random>    // For std::default_random_engine
+#include <algorithm>
+#include <random>
 #include <chrono>
 
 using std::cout;
@@ -27,7 +27,7 @@ namespace ariel{
 
     public:
                Board();
-               Board(bool test);
+               Board(bool test); // For the demo and tests
                ~Board();
 
                 inline void setOwner(unsigned int place, string color){ this->_places[place-1].setOwner(color); };

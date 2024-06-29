@@ -13,6 +13,7 @@ namespace ariel {
 
     class Catan;
 
+    // Main class
     class Card {
         string Card_Type;
 
@@ -24,6 +25,7 @@ namespace ariel {
 
     };
 
+    // All the types of cards
     class Monopoly : public Card {
         public:
                 Monopoly();

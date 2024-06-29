@@ -8,6 +8,7 @@ namespace ariel{
 
     Card::~Card() {}
 
+    // The way each type uses itself
     Monopoly::Monopoly() : Card("Monopoly") {}
     void Monopoly::use_card(Player &p, Catan &c) {
         string choice;

@@ -20,9 +20,9 @@ namespace ariel{
 
         string _name; // Players name
         int _index; // Players index in the game
-        string _color;
+        string _color; // Players colors
 
-        int _points = 2; // Players number of points
+        int _points = 2;
         int _numOfCities = 0;
         int _numOfSettlements = 2;
 
@@ -42,22 +42,20 @@ namespace ariel{
         public:
                 static int _turn; // Current turn index
 
-                Player(string name, string color); // Constructor
+                Player(string name, string color);
                 ~Player();
 
                 void placeCity(unsigned int place_id, Board& board);
                 void placeSettlement(unsigned int place_id, Board& board);
                 bool placeRoad(unsigned int from, unsigned int to, Board& board);
-                int rollDice(); // Maybe const
+                int rollDice();
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
                 void tradeBank(string give, string get);
-//                void buyDevelopmentCard();
                 void printPoints() const;
 
                 inline string getName() const {return this->_name;};
                 inline string getColor() const {return this->_color;};
-//                inline static int getTurn() {return this->_turn;};
                 inline void setIdx(int num) {this->_index = num;};
                 inline int getIdx() const {return this->_index;};
                 inline int getNumOfSettlements() {return this->_numOfSettlements;};
@@ -85,8 +83,6 @@ namespace ariel{
                 inline int getNumOfWheat() const {return this->_numOfWheat;};
 
                 inline int getPoints() const {return this->_points;};
-
-//                void useCard(Board &board, string type);
 
                 inline int getNumOfMonopoly() const {return this->_numOfMonopoly;};
                 inline int getNumOfBuild2Roads() const {return this->_numOfBuild2Roads;};

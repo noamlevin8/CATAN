@@ -23,19 +23,18 @@ namespace ariel {
     class Catan
     {
         // Fields
-
         Player* _p1;
         Player* _p2;
         Player* _p3;
         Board _GameBoard;
-        stack<unique_ptr<Card>> _cards;
+        stack<unique_ptr<Card>> _cards; // Cards stack
 
         public:
                 Catan(Player& p1, Player& p2, Player& p3);
-                Catan(Player& p1, Player& p2, Player& p3, bool test);
+                Catan(Player& p1, Player& p2, Player& p3, bool test); // For the demo and tests
                 ~Catan();
                 Player* ChooseStartingPlayer();
-                Player* ChooseStartingPlayer(bool test);
+                Player* ChooseStartingPlayer(bool test); // For the demo and tests
                 Board* getBoard();
                 void printWinner() const;
                 bool hasWinner() const;
