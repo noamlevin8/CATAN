@@ -4,10 +4,11 @@
 CXX = clang++
 CXXFLAGS = -std=c++14 -Wsign-conversion -g
 CATANOBJ = Catan.o Player.o Board.o Game.o Place.o Card.o
+DEMOOBJ = Catan.o Player.o Board.o Demo.o Place.o Card.o
 #TESTOBJ = Test.o TestCounter.o $(filter-out main.o, $(CATANOBJ))
 VALGRIND_FLAGS=-v --leak-check=full --show-leak-kinds=all  --error-exitcode=99
 
-all: Catan
+all: Catan Demo
 
 #Catan: $(CATANOBJ)
 #	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
@@ -30,6 +31,12 @@ Game.o: Game.cpp
 Card.o : Card.cpp Card.hpp
 	$(CXX) $(CXXFLAGS) -c Card.cpp
 
+Demo.o : Demo.cpp
+	$(CXX) $(CXXFLAGS) -c Demo.cpp
+
+Demo : $(DEMOOBJ)
+	$(CXX) $(CXXFLAGS) $(DEMOOBJ) -o Demo
+
 Catan: $(CATANOBJ)
 	$(CXX) $(CXXFLAGS) $(CATANOBJ) -o Catan
 
@@ -38,6 +45,6 @@ valgrind: Catan
 #	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 
 clean:
-	rm -f *.o Catan
+	rm -f *.o Catan Demo
 
 .PHONY: all clean

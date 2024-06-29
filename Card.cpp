@@ -218,6 +218,11 @@ namespace ariel{
     Knight::Knight() : Card("Knight") {}
     void Knight::use_card(Player &p, Catan &c) {
         cout << "Added a Knight" << endl;
+
+        p.useKnight();
+
+        if(p.getNumUsedKnights() == 3)
+            p.KnightsPoints();
     }
 
     VictoryPoint::VictoryPoint() : Card("Victory Point") {}

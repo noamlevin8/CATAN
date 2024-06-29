@@ -40,6 +40,30 @@ namespace ariel {
         }
     }
 
+    Catan::Catan(Player& p1, Player& p2, Player& p3, bool test){
+        this->_p1 = &p1;
+        this->_p2 = &p2;
+        this->_p3 = &p3;
+        this->_GameBoard = Board(test);
+        vector<unique_ptr<Card>> cards;
+
+        cards.push_back(make_unique<Monopoly>());
+
+        cards.push_back(make_unique<YearOfPlenty>());
+
+        cards.push_back(make_unique<VictoryPoint>());
+
+        cards.push_back(make_unique<Knight>());
+        cards.push_back(make_unique<Knight>());
+        cards.push_back(make_unique<Knight>());
+
+        cards.push_back(make_unique<Build2Roads>());
+
+        for (auto& card : cards) {
+            this->_cards.push(std::move(card));
+        }
+    }
+
     Catan::~Catan() {}
 
     Player* Catan::ChooseStartingPlayer() {
@@ -75,6 +99,15 @@ namespace ariel {
             cout << "\nThe player that starts is: " << this->_p3->getName() << endl;
             return this->_p3;
         }
+    }
+
+    Player* Catan::ChooseStartingPlayer(bool test){
+        this->_p1->setIdx(1);
+        this->_p2->setIdx(2);
+        this->_p3->setIdx(3);
+
+        cout << "\nThe player that starts is: " << this->_p1->getName() << endl;
+        return this->_p1;
     }
 
     Board* Catan::getBoard() {
@@ -344,11 +377,11 @@ namespace ariel {
                         if (typeWithNum == "Stone") { this->_p1->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p1->addWheat(1); }
                     } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
-                        if (typeWithNum == "Wood") { this->_p3->addWood(2); }
-                        if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
-                        if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
-                        if (typeWithNum == "Stone") { this->_p3->addStone(2); }
-                        if (typeWithNum == "Wheat") { this->_p3->addWheat(2); }
+                        if (typeWithNum == "Wood") { this->_p1->addWood(2); }
+                        if (typeWithNum == "Brick") { this->_p1->addBrick(2); }
+                        if (typeWithNum == "Sheep") { this->_p1->addSheep(2); }
+                        if (typeWithNum == "Stone") { this->_p1->addStone(2); }
+                        if (typeWithNum == "Wheat") { this->_p1->addWheat(2); }
                     }
 
                     c = this->_p2->getColor();
@@ -359,11 +392,11 @@ namespace ariel {
                         if (typeWithNum == "Stone") { this->_p2->addStone(1); }
                         if (typeWithNum == "Wheat") { this->_p2->addWheat(1); }
                     } else if(this->_GameBoard.getPlace(i)->getOwner() == c.replace(2, 2, "1;")){
-                        if (typeWithNum == "Wood") { this->_p3->addWood(2); }
-                        if (typeWithNum == "Brick") { this->_p3->addBrick(2); }
-                        if (typeWithNum == "Sheep") { this->_p3->addSheep(2); }
-                        if (typeWithNum == "Stone") { this->_p3->addStone(2); }
-                        if (typeWithNum == "Wheat") { this->_p3->addWheat(2); }
+                        if (typeWithNum == "Wood") { this->_p2->addWood(2); }
+                        if (typeWithNum == "Brick") { this->_p2->addBrick(2); }
+                        if (typeWithNum == "Sheep") { this->_p2->addSheep(2); }
+                        if (typeWithNum == "Stone") { this->_p2->addStone(2); }
+                        if (typeWithNum == "Wheat") { this->_p2->addWheat(2); }
                     }
 
                     c = this->_p3->getColor();

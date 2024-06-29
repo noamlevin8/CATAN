@@ -9,6 +9,8 @@
 #include "Player.hpp"
 #include "Board.hpp"
 
+#include <sstream>
+
 using namespace std;
 using namespace ariel;
 
@@ -17,76 +19,115 @@ int main()
     Player p1("Amit", "\033[0;34m"); // Blue color
     Player p2("Yossi", "\033[0;31m"); // Red color
     Player p3("Dana", "\033[0;32m"); // Green color
-    Catan catan(p1, p2, p3);
-    // Starting of the game. Every player places two settlements and two roads.
-    catan.ChooseStartingPlayer();   // should print the name of the starting player, assume it is Amit.
-    Board board = catan.getBoard(); // get the board of the game.
-    vector<string> places = {"Forest", "Hills"};
-    vector<int> placesNum = {5, 6};
-    p1.placeSettlement(places, placesNum, board);
-    p1.placeRoad(places, placesNum, board);
-    vector<string> places = {"Agricultural Land", "Desert"};
-    vector<int> placesNum = {3, 4};
-    p1.placeSettlement(places, placesNum, board);
-    p1.placeRoad(places, placesNum, board); // p1 chooses Forest, hills, Agricultural Land, Desert with numbers 5, 6, 3, 4.
 
-    vector<string> places = {"Mountains", "Pasture Land"};
-    vector<int> placesNum = {4, 9};
-    p2.placeSettlement(places, placesNum, board);
-    p2.placeRoad(places, placesNum, board);
-    try
-    {
-        p3.placeSettlement(places, placesNum, board); // p3 tries to place a settlement in the same location as p2.
-    }
-    catch (const std::exception &e)
-    {
-        cout << e.what() << endl;
-    }
-    vector<string> places = {"Forest", "Pasture Land"};
-    vector<int> placesNum = {5, 9};
-    p2.placeSettlement(places, placesNum, board);
-    p2.placeRoad(places, placesNum, board); // p2 chooses Mountains, Pasture Land, and Forest with numbers 4, 9, 5.
+    Catan catan(p1, p2, p3, true);
 
-    vector<string> places = {"Mountains", "Pasture Land"};
-    vector<int> placesNum = {3, 8};
-    p3.placeSettlement(places, placesNum, board);
-    p3.placeRoad(places, placesNum, board);
-    vector<string> places = {"Agricultural Land", "Pasture Land"};
-    vector<int> placesNum = {3, 9};
-    p3.placeSettlement(places, placesNum, board);
-    p3.placeRoad(places, placesNum, board); // p3 chooses Mountains, Pasture Land, Agricultural Land, Pasture Land with numbers 3, 8, 3, 9.
+    Player *player = catan.ChooseStartingPlayer(true);  // should print the name of the starting player, assume it is Amit.
 
-    // p1 has wood,bricks, and wheat, p2 has wood, stone, and sheep, p3 has stone, sheep, wheat.
-    p1.rollDice();                                    // Lets say it's print 4. Then, p2 gets ore from the mountations.
-    p1.placeRoad({"Forest", "Hills"}, {5, 6}, board); // p1 continues to build a road.
-    p1.endTurn();                                     // p1 ends his turn.
+    // Settlement assignment for the start of the game
+    streambuf* orig = cin.rdbuf();
+    istringstream input("48\n44\n29\n23\n37\n32\n47\n42\n19\n24\n49\n45\n");
+    cin.rdbuf(input.rdbuf());
+    catan.firstTurn(*player);
+    cin.rdbuf(orig);
 
-    p2.rollDice(); // Lets say it's print 9. Then, p3 gets sheep from the Pasture Land, p2 gets sheep from the Pasture Land.
-    p2.endTurn();  // p2 ends his turn.
+    catan.getBoard()->printBoard(); // The start of the game
+    cout << player->getName() << "'s turn!" << endl;
 
-    p3.rollDice(); // Lets say it's print 3. Then, p3 gets wheat from the Agricultural Land and stone from the Mountains, p1 gets wheat from the Agricultural Land.
-    p3.endTurn();  // p3 ends his turn.
+    player->placeRoad(44, 40, *catan.getBoard()); // Amit builds a road
 
-    try
-    {
-        p2.rollDice(); // p2 tries to roll the dice again, but it's not his turn.
-    }
-    catch (const std::exception &e)
-    {
-        cout << e.what() << endl;
+    player = catan.endTurn(); // Yossi's turn
+
+    player->addBrick(2);
+    player->addWheat(1);
+    player->addWood(1);
+
+    player->placeRoad(24, 30, *catan.getBoard()); // Yossi builds a road
+    player->placeSettlement(30, *catan.getBoard()); // Yossi builds a settlement on 30
+
+    player = catan.endTurn(); // Dana's turn
+
+    player->addWheat(3);
+    player->addStone(4);
+
+    player->placeCity(47, *catan.getBoard()); // Dana builds a city on 47
+
+    catan.buyDevelopmentCard(*player); // Dana buys a "Build 2 Roads" card // Problem
+
+    player = catan.endTurn(); // Amit's turn
+
+    player->addWood(6);
+
+    // Amit trades with Dana (2 wood for 1 brick) and trades bank (wood for stone)
+    player->trade(*catan.getPlayer(3), "wood", "brick", 2, 1);
+    player->tradeBank("wood", "stone");
+
+    player = catan.endTurn(); // Yossi's turn
+
+    player->addWheat(6);
+    player->addStone(6);
+    player->addSheep(6);
+
+    for(int i = 0; i < 6; i++){
+        // Yossi buys 3 "Knight", 1 "Victory Point", 1 "Year of Plenty", 1 "Monopoly"
+        catan.buyDevelopmentCard(*player);
     }
 
-    p1.rollDice();                       // Lets say it's print 6. Then, p1 gets bricks from the hills.
-    p1.trade(p2, "wood", "brick", 1, 1); // p1 trades 1 wood for 1 brick with p2.
-    p1.endTurn();                        // p1 ends his turn.
+    // Yossi uses a "Monopoly" card and takes brick from the others
+    orig = cin.rdbuf();
+    istringstream input1("\nMonopoly\nbrick\n");
+    cin.rdbuf(input1.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
 
-    p2.rollDice();           // Lets say it's print 9. Then, p3 gets sheep from the Pasture Land, p2 gets sheep from the Pasture Land.
-    p2.buyDevelopmentCard(); // p2 buys a development card. Lets say it is a bonus points card.
-    p2.endTurn();            // p2 ends his turn.
+    // Yossi uses a "Year of Plenty" card and takes wood and sheep from the bank
+    orig = cin.rdbuf();
+    istringstream input2("\nYear of Plenty\nwood\nsheep\n");
+    cin.rdbuf(input2.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
 
-    p1.printPoints(); // p1 has 2 points because it has two settelments.
-    p2.printPoints(); // p2 has 3 points because it has two settelments and a bonus points card.
-    p3.printPoints(); // p3 has 2 points because it has two settelments.
+    // Yossi uses a "Knight" card and gets 2 points
+    orig = cin.rdbuf();
+    istringstream input3("\nKnight\n");
+    cin.rdbuf(input3.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
 
-    catan.printWinner(); // Should print None because no player reached 10 points.
+    orig = cin.rdbuf();
+    istringstream input4("\nKnight\n");
+    cin.rdbuf(input4.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
+
+    orig = cin.rdbuf();
+    istringstream input5("\nKnight\n");
+    cin.rdbuf(input5.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
+
+    player = catan.endTurn(); // Dana's turn
+
+    // Dana uses a "Build 2 Roads" card and builds 2 roads
+    orig = cin.rdbuf();
+    istringstream input6("\nBuild 2 Roads\n42\n37\n32\n38\n");
+    cin.rdbuf(input6.rdbuf());
+    catan.useDevelopmentCard(*player);
+    cin.rdbuf(orig);
+
+    player = catan.endTurn(); // Amit's turn
+
+    player = catan.endTurn(); // Yossi's turn
+
+    player->addVictoryPoint(3); // Adding Yossi 3 points (has 9)
+    catan.hasWinner(); // Should be no
+
+    player->addVictoryPoint(1); // Adding Yossi a point (has 10)
+    catan.hasWinner(); // Should be Yes
+
+    catan.getBoard()->printBoard();
+    player->printPoints();
+    catan.printWinner();
+
+    return 0;
 }

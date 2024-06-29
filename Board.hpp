@@ -27,6 +27,7 @@ namespace ariel{
 
     public:
                Board();
+               Board(bool test);
                ~Board();
 
                 inline void setOwner(unsigned int place, string color){ this->_places[place-1].setOwner(color); };

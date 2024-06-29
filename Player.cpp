@@ -665,28 +665,18 @@ namespace ariel {
             if(get == "brick"){
                 addBrick(1);
                 subWood(4);
-            }
-
-            if(get == "sheep"){
+            } else if(get == "sheep"){
                 addSheep(1);
                 subWood(4);
-            }
-
-            if(get == "stone"){
+            } else if(get == "stone"){
                 addStone(1);
                 subWood(4);
-            }
-
-            if(get == "wheat"){
+            } else if(get == "wheat"){
                 addWheat(1);
                 subWood(4);
-            }
-
-            else
+            } else
                 cout << "Not a valid get value!" << endl;
-        }
-
-        if(give == "brick"){
+        } else if(give == "brick"){
             if (this->_numOfBrick < 4) {
                 //throw exception("You don't have enough wood!");
                 cout << "You don't have enough brick!" << endl;
@@ -696,28 +686,18 @@ namespace ariel {
             if(get == "wood"){
                 addWood(1);
                 subBrick(4);
-            }
-
-            if(get == "sheep"){
+            } else if(get == "sheep"){
                 addSheep(1);
                 subBrick(4);
-            }
-
-            if(get == "stone"){
+            } else if(get == "stone"){
                 addStone(1);
                 subBrick(4);
-            }
-
-            if(get == "wheat"){
+            } else if(get == "wheat"){
                 addWheat(1);
                 subBrick(4);
-            }
-
-            else
+            } else
                 cout << "Not a valid get value!" << endl;
-        }
-
-        if(give == "sheep"){
+        } else if(give == "sheep"){
             if (this->_numOfSheep < 4) {
                 //throw exception("You don't have enough wood!");
                 cout << "You don't have enough sheep!" << endl;
@@ -727,28 +707,18 @@ namespace ariel {
             if(get == "wood"){
                 addWood(1);
                 subSheep(4);
-            }
-
-            if(get == "brick"){
+            } else if(get == "brick"){
                 addBrick(1);
                 subSheep(4);
-            }
-
-            if(get == "stone"){
+            } else if(get == "stone"){
                 addStone(1);
                 subSheep(4);
-            }
-
-            if(get == "wheat"){
+            } else if(get == "wheat"){
                 addWheat(1);
                 subSheep(4);
-            }
-
-            else
+            } else
                 cout << "Not a valid get value!" << endl;
-        }
-
-        if(give == "stone"){
+        } else if(give == "stone"){
             if (this->_numOfStone < 4) {
                 //throw exception("You don't have enough wood!");
                 cout << "You don't have enough stone!" << endl;
@@ -758,28 +728,18 @@ namespace ariel {
             if(get == "wood"){
                 addWood(1);
                 subStone(4);
-            }
-
-            if(get == "brick"){
+            } else if(get == "brick"){
                 addBrick(1);
                 subStone(4);
-            }
-
-            if(get == "sheep"){
+            } else if(get == "sheep"){
                 addSheep(1);
                 subStone(4);
-            }
-
-            if(get == "wheat"){
+            } else if(get == "wheat"){
                 addWheat(1);
                 subStone(4);
-            }
-
-            else
+            } else
                 cout << "Not a valid get value!" << endl;
-        }
-
-        if(give == "wheat"){
+        } else if(give == "wheat"){
             if (this->_numOfWheat < 4) {
                 //throw exception("You don't have enough wood!");
                 cout << "You don't have enough wheat!" << endl;
@@ -789,27 +749,18 @@ namespace ariel {
             if(get == "wood"){
                 addWood(1);
                 subWheat(4);
-            }
-
-            if(get == "brick"){
+            } else if(get == "brick"){
                 addBrick(1);
                 subWheat(4);
-            }
-
-            if(get == "sheep"){
+            } else if(get == "sheep"){
                 addSheep(1);
                 subWheat(4);
-            }
-
-            if(get == "stone"){
+            } else if(get == "stone"){
                 addStone(1);
                 subWheat(4);
-            }
-
-            else
+            } else
                 cout << "Not a valid get value!" << endl;
-        }
-        else
+        } else
             cout << "Not a valid give value!" << endl;
     }
 

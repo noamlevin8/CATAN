@@ -31,6 +31,7 @@ namespace ariel{
         int _numOfMonopoly = 0;
         int _numOfBuild2Roads = 0;
         int _numOfYearOfPlenty = 0;
+        int _numOfUsedKnights = 0;
 
         int _numOfWood = 0;
         int _numOfBrick = 0;
@@ -91,13 +92,16 @@ namespace ariel{
                 inline int getNumOfBuild2Roads() const {return this->_numOfBuild2Roads;};
                 inline int getNumOfYearOfPlenty() const {return this->_numOfYearOfPlenty;};
                 inline int getNumOfKnights() const {return this->_numOfKnights;};
+                inline int getNumUsedKnights() const {return this->_numOfUsedKnights;};
                 inline int getNumOfVictoryPoints() const {return this->_numOfVictoryPoints;};
 
                 inline void addMonopoly(int num) { this->_numOfMonopoly += num;};
                 inline void add2Roads(int num) { this->_numOfBuild2Roads += num;};
                 inline void addYearOfPlenty(int num) { this->_numOfYearOfPlenty += num;};
                 inline void addKnight(int num) { this->_numOfKnights += num;};
-                inline void addVictoryPoint(int num) { this->_numOfVictoryPoints += num; this->_points++;};
+                inline void useKnight() { this->_numOfUsedKnights++;};
+                inline void KnightsPoints() { this->_points += 2;};
+                inline void addVictoryPoint(int num) { this->_numOfVictoryPoints += num; this->_points += num;};
 
                 inline void subMonopoly(int num) { this->_numOfMonopoly -= num;};
                 inline void sub2Roads(int num) { this->_numOfBuild2Roads -= num;};

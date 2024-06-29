@@ -32,8 +32,10 @@ namespace ariel {
 
         public:
                 Catan(Player& p1, Player& p2, Player& p3);
+                Catan(Player& p1, Player& p2, Player& p3, bool test);
                 ~Catan();
                 Player* ChooseStartingPlayer();
+                Player* ChooseStartingPlayer(bool test);
                 Board* getBoard();
                 void printWinner() const;
                 bool hasWinner() const;
