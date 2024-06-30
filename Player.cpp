@@ -15,7 +15,6 @@ namespace ariel {
 
     Player::~Player() {}
 
-    // need to check for 2 roads
     void Player::placeSettlement(unsigned int place_id, Board& board) {
         if (this->_numOfBrick < 1 || this->_numOfWood < 1 || this->_numOfSheep < 1 || this->_numOfWheat < 1) {
             cout << "You don't have enough resources!" << endl;
@@ -130,6 +129,7 @@ namespace ariel {
         }
 
         //Place the road
+        // I own "from" or "to"
         if(this->_color == board.getPlace(from)->getOwner() || this->_color == board.getPlace(to)->getOwner()){
             vector<unsigned int> neighbors = board.getPlace(from)->getNeighbors();
 
@@ -155,6 +155,7 @@ namespace ariel {
             }
         }
 
+        // No one owns "from" or "to" and I also don't have a city there
         if((board.getPlace(from)->getOwner() == "" || this->_color != board.getPlace(from)->getOwner().replace(2, 2, "0;"))
            && (board.getPlace(to)->getOwner() == "" || this->_color != board.getPlace(to)->getOwner().replace(2, 2, "0;"))){
             vector<unsigned int> neighbors = board.getPlace(from)->getNeighbors();

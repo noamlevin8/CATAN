@@ -6,6 +6,8 @@
 #define FALSE 0
 #define TRUE 1
 
+const std::string RESET = "\033[0m";
+
 namespace ariel {
     Place::Place(){}
     Place::~Place(){}

@@ -46,8 +46,8 @@ Catan: $(CATANOBJ)
 test: $(TESTOBJ)
 	$(CXX) $(CXXFLAGS) $(TESTOBJ) -o test
 
-valgrind: Catan
-	#valgrind --tool=memcheck $(VALGRIND_FLAGS) ./Catan 2>&1 | { egrep "lost| at " || true; }
+valgrind: Demo test Catan
+	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./Catan 2>&1 | { egrep "lost| at " || true; }
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./test 2>&1 | { egrep "lost| at " || true; }
 	valgrind --tool=memcheck $(VALGRIND_FLAGS) ./Demo 2>&1 | { egrep "lost| at " || true; }
 

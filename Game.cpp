@@ -31,7 +31,7 @@ int main() {
     Player *player = catan.ChooseStartingPlayer(); // Prints the name of the first player
 
 
-    // Settlement assignment for the start of the game (need to create a function)
+    // Settlement assignment for the start of the game
     catan.firstTurn(*player);
 
     catan.getBoard()->printBoard(); // The start of the game
@@ -41,7 +41,7 @@ int main() {
     unsigned int from, to, place;
     string name, get, give;
     int getNum, giveNum;
-    Player* pForTrade = player; // check
+    Player* pForTrade = player;
 
     // While we don't have a winner we keep playing
     while (!catan.hasWinner()) {
@@ -158,8 +158,6 @@ int main() {
 
                     cout << "How many: " << endl;
                     cin >> giveNum;
-
-                    cout << "Player's name - " << player->getName() << ", Trader name - " << pForTrade->getName() << endl;
 
                     if(player->getName() != pForTrade->getName())
                         player->trade(*pForTrade, give, get, giveNum, getNum);

@@ -47,7 +47,7 @@ namespace ariel{
 
                 void placeCity(unsigned int place_id, Board& board);
                 void placeSettlement(unsigned int place_id, Board& board);
-                bool placeRoad(unsigned int from, unsigned int to, Board& board);
+                bool placeRoad(unsigned int from, unsigned int to, Board& board); // Bool because of the first turn
                 int rollDice();
                 inline static void endTurn() {_turn = (_turn % 3) + 1;};
                 void trade(Player& p2, string give, string get, int give_num, int get_num);
@@ -58,8 +58,8 @@ namespace ariel{
                 inline string getColor() const {return this->_color;};
                 inline void setIdx(int num) {this->_index = num;};
                 inline int getIdx() const {return this->_index;};
-                inline int getNumOfSettlements() {return this->_numOfSettlements;};
-                inline int getNumOfResources() {return this->_numOfWheat + this->_numOfStone + this->_numOfSheep + this->_numOfBrick + this->_numOfWood;}
+                inline int getNumOfSettlements() const {return this->_numOfSettlements;};
+                inline int getNumOfResources() const {return this->_numOfWheat + this->_numOfStone + this->_numOfSheep + this->_numOfBrick + this->_numOfWood;}
 
                 inline void addWood(int num) {this->_numOfWood += num;};
                 inline void subWood(int num) {this->_numOfWood -= num;};

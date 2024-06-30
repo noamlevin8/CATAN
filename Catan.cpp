@@ -141,6 +141,7 @@ namespace ariel {
         return false;
     }
 
+    // Moving the turn to the next player
     Player* Catan::endTurn() const {
         Player::endTurn();
         int turn = Player::_turn;
@@ -157,8 +158,9 @@ namespace ariel {
         }
     }
 
+    // Updating all the players resources based on the dice result
     void Catan::updateResources(int dice) {
-        // 7 case
+        // 7 case (may need to remove cards)
         if (dice == 7) {
             int n, count = 0;
             if (this->_p1->getNumOfResources() > 7) {
@@ -356,7 +358,7 @@ namespace ariel {
                     }
                 }
             }
-        } else {
+        } else { // Not 7
             string c;
             for (unsigned int i = 1; i < 55; i++) {
                 if (i == 7)
@@ -414,6 +416,7 @@ namespace ariel {
         }
     }
 
+    // Return the player by i (if i is 1 we return _p1)
     Player* Catan::getPlayer(int i) const {
         if (i == 1)
             return this->_p1;
@@ -447,11 +450,9 @@ namespace ariel {
             firstSettlements(*this->_p1, true);
             firstSettlements(*this->_p3, true);
         }
-
-
     }
 
-    // First turn's settlement assignments with a bool type for knowing if to give resources or not
+    // First turn's settlement assignments with a bool type for knowing whether to give resources or not
     void Catan::firstSettlements(Player &p, bool resources) {
         bool valid_place = false, check_nei = true;
         unsigned int place;
@@ -507,6 +508,7 @@ namespace ariel {
             valid_road = true;
         }
 
+        // Searching for the place in the neighbors of "to" and assigning p's color
         vector<unsigned int> neighbors = this->_GameBoard.getPlace(to)->getNeighbors();
         for (unsigned int i = 0; i < neighbors.size(); i++) {
             if (this->_GameBoard.getPlace(neighbors[i]) == this->_GameBoard.getPlace(place)) {
@@ -514,6 +516,7 @@ namespace ariel {
             }
         }
 
+        // Searching for the "to" place in the neighbors of "place" and assigning p's color
         neighbors = this->_GameBoard.getPlace(place)->getNeighbors();
         for (unsigned int i = 0; i < neighbors.size(); i++) {
             if (this->_GameBoard.getPlace(neighbors[i]) == this->_GameBoard.getPlace(to)) {

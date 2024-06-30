@@ -1,7 +1,6 @@
-/**
- * Demo file for Ex3.
- *
- */
+// ID: 326662574
+// MAIL: noamlevin11@gmail.com
+
 #include <iostream>
 #include <stdexcept>
 #include <vector>
@@ -52,7 +51,7 @@ int main()
 
     player->placeCity(47, *catan.getBoard()); // Dana builds a city on 47
 
-    catan.buyDevelopmentCard(*player); // Dana buys a "Build 2 Roads" card // Problem
+    catan.buyDevelopmentCard(*player); // Dana buys a "Build 2 Roads" card
 
     player = catan.endTurn(); // Amit's turn
 
@@ -87,7 +86,7 @@ int main()
     catan.useDevelopmentCard(*player);
     cin.rdbuf(orig);
 
-    // Yossi uses a "Knight" card and gets 2 points
+    // Yossi uses the "Knight" cards and gets 2 points
     orig = cin.rdbuf();
     istringstream input3("\nKnight\n");
     cin.rdbuf(input3.rdbuf());
@@ -125,9 +124,9 @@ int main()
     player->addVictoryPoint(1); // Adding Yossi a point (has 10)
     catan.hasWinner(); // Should be Yes
 
-    catan.getBoard()->printBoard();
-    player->printPoints();
-    catan.printWinner();
+    catan.getBoard()->printBoard(); // Printing the board at the end of the game
+    player->printPoints(); // Printing Yossi's points
+    catan.printWinner(); // Printing that Yossi is the winner
 
     return 0;
 }

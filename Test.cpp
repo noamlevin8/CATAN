@@ -93,6 +93,7 @@ TEST_CASE("Building a road")
     cin.rdbuf(orig);
 
     restoreOutput();
+    // Checking roads
     CHECK(player->placeRoad(46, 50, *catan.getBoard()) == false); // Not a valid place for this player
     CHECK(player->placeRoad(44, 40, *catan.getBoard()) == true); // Valid place
 
@@ -131,6 +132,7 @@ TEST_CASE("Building a settlement")
     player->placeSettlement(30, *catan.getBoard()); // Trying to build a settlement
 
     restoreOutput();
+    // Checking if we built the settlement
     CHECK(catan.getBoard()->getPlace(30)->getOwner() != player->getColor()); // Not enough resources
 
     suppressOutput();
@@ -138,6 +140,7 @@ TEST_CASE("Building a settlement")
     player->placeSettlement(30, *catan.getBoard()); // Now enough
 
     restoreOutput();
+    // Checking if we built the settlement
     CHECK(catan.getBoard()->getPlace(30)->getOwner() == player->getColor());
 }
 
@@ -180,6 +183,7 @@ TEST_CASE("Building a city")
     player->placeCity(47, *catan.getBoard()); // Trying to build a city
 
     restoreOutput();
+    // Checking if we built the city
     CHECK(catan.getBoard()->getPlace(47)->getOwner() != c.replace(2, 2, "1;"));
 
     suppressOutput();
@@ -187,6 +191,7 @@ TEST_CASE("Building a city")
     player->placeCity(47, *catan.getBoard()); // Build a city
 
     restoreOutput();
+    // Checking if we built the city
     CHECK(catan.getBoard()->getPlace(47)->getOwner() == c.replace(2, 2, "1;"));
 }
 
@@ -235,6 +240,7 @@ TEST_CASE("Trades")
     player->trade(*catan.getPlayer(3), "wood", "brick", 2, 2); // Didn't work
 
     restoreOutput();
+    // Checking if the trade worked
     CHECK(player->getNumOfBrick() == 0);
     CHECK(player->getNumOfWood() == 6);
 
@@ -242,6 +248,7 @@ TEST_CASE("Trades")
     player->trade(*catan.getPlayer(3), "wood", "brick", 2, 1); // Now worked
 
     restoreOutput();
+    // Checking if the trade worked
     CHECK(player->getNumOfBrick() == 1);
     CHECK(player->getNumOfWood() == 4);
 
@@ -249,6 +256,7 @@ TEST_CASE("Trades")
     player->tradeBank("wood", "stone");
 
     restoreOutput();
+    // Checking if the trade worked
     CHECK(player->getNumOfWood() == 0);
     CHECK(player->getNumOfStone() == 1);
 }
@@ -309,6 +317,7 @@ TEST_CASE("Card")
     }
 
     restoreOutput();
+    // Checking if we were able to buy 6 cards
     CHECK(player->getNumOfWheat() == 0);
     CHECK(player->getNumOfStone() == 0);
     CHECK(player->getNumOfSheep() == 0);
@@ -342,6 +351,7 @@ TEST_CASE("Card")
     cin.rdbuf(orig);
 
     restoreOutput();
+    // Checking if using "Year of Plenty" worked
     CHECK(player->getNumOfWood() == 1);
     CHECK(player->getNumOfSheep() == 1);
 
@@ -365,12 +375,14 @@ TEST_CASE("Card")
     cin.rdbuf(orig);
 
     restoreOutput();
+    // Checking that we got the points from having 3 used "Knight" cards
     CHECK(player->getPoints() == 6);
 
     suppressOutput();
     player = catan.endTurn();
 
     restoreOutput();
+    // Checking that we still have the card from last turn
     CHECK(player->getNumOfBuild2Roads() == 1);
 
     suppressOutput();
@@ -381,6 +393,7 @@ TEST_CASE("Card")
     cin.rdbuf(orig);
 
     restoreOutput();
+    // Checking that after we used the card we don't have it anymore
     CHECK(player->getNumOfBuild2Roads() == 0);
 }
 
@@ -483,11 +496,13 @@ TEST_CASE("Winner")
     player->addVictoryPoint(3);
 
     restoreOutput();
+    // Checking if we have a winner
     CHECK(catan.hasWinner() == false); // Should be no
 
     suppressOutput();
     player->addVictoryPoint(1);
 
     restoreOutput();
+    // Checking if we have a winner
     CHECK(catan.hasWinner() == true); // Should be Yes
 }
