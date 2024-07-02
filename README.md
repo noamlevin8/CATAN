@@ -78,18 +78,18 @@ Players can build roads, settlements, and cities.
 ## Important Functions
 
 ### Catan Class
-- **firstTurn(Player* player)**: Handles the first turn of the player, asking them to place the first settlements and roads in the right order.
-- **updateResources(int diceResult)**: Updates resources for all players based on the dice result.
-- **buyDevelopmentCard(Player* player)**: Checks if the player has enough resources to buy a development card and processes the purchase.
-- **useDevelopmentCard(Player* player)**: Asks the player which card to use and checks if the player has it. If so, uses the card.
+- **firstTurn(Player player)**: Handles the first turn of the player, asking them to place the first settlements and roads in the right order.
+- **updateResources(int dice)**: Updates resources for all players based on the dice result.
+- **buyDevelopmentCard(Player player)**: Checks if the player has enough resources to buy a development card and processes the purchase.
+- **useDevelopmentCard(Player player)**: Asks the player which card to use and checks if the player has it. If so, uses the card.
 - **endTurn()**: Moves the turn to the next player and returns a pointer to that player.
 
 ### Player Class
-- **placeRoad(unsigned int from, unsigned int to, Board* board)**: Checks if the position of the road is valid and, if so, builds it on the board.
-- **placeSettlement(unsigned int place, Board* board)**: Checks if the position of the settlement is valid and, if so, builds it on the board.
-- **placeCity(unsigned int place, Board* board)**: Checks if the position of the city is valid and, if so, builds it on the board.
-- **trade(Player* otherPlayer, std::string give, std::string get, int giveAmount, int getAmount)**: Checks if the trade is valid and, if so, makes the trade.
-- **tradeBank(std::string give, std::string get)**: Checks if the player has at least 4 cards of the "give" type and, if so, makes the trade.
+- **placeRoad(unsigned int from, unsigned int to, Board board)**: Checks if the position of the road is valid and, if so, builds it on the board.
+- **placeSettlement(unsigned int place, Board board)**: Checks if the position of the settlement is valid and, if so, builds it on the board.
+- **placeCity(unsigned int place, Board board)**: Checks if the position of the city is valid and, if so, builds it on the board.
+- **trade(Player otherPlayer, string give, string get, int giveNum, int getNum)**: Checks if the trade is valid and, if so, makes the trade.
+- **tradeBank(string give, string get)**: Checks if the player has at least 4 cards of the "give" type and, if so, makes the trade.
 
 ## Conclusion
 This digital version of Catan offers a comprehensive and immersive experience of the classic board game. With detailed class structures and functions, players can enjoy a seamless and strategic gameplay experience.
